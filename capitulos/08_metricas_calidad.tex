@@ -1,1 +1,393 @@
+% =====================================================================
+% CAPÍTULO 08 — MÉTRICAS DE CALIDAD DEL ERS (SGCV-IA)
+% Auditoría mediante las métricas M1–M6
+% Resultados definitivos de la auditoría sobre la versión final del ERS
+% =====================================================================
 
+\chapter{Métricas de calidad}
+\label{sec:metricas}
+
+\section{Diseño del instrumento de auditoría}
+
+La auditoría emplea seis métricas derivadas del modelo de calidad de producto de
+ISO/IEC 25010 y de las características de un buen conjunto de requisitos de
+ISO/IEC/IEEE 29148, aplicadas sobre la versión final del ERS del sistema SGCV-IA
+(\texttt{main\_corregido.tex}). Todas las métricas se expresan como una fracción
+sobre un total contable. Los conteos se obtuvieron mediante revisión directa de
+las secciones del ERS: la Sección 3.2, correspondiente a las tarjetas de
+requisitos funcionales; la Sección 3.6, correspondiente a la tabla consolidada
+de priorización MoSCoW; la Sección 4, correspondiente al diagrama y
+especificación de casos de uso; y la Tabla 29, correspondiente a la Matriz de
+Trazabilidad.
+
+Para la auditoría de M2 se contrastó la prioridad registrada en las tarjetas
+individuales de los requisitos funcionales con la tabla consolidada de
+priorización MoSCoW, además de revisar pares de requisitos relacionados por
+contenido. La revisión identificó inconsistencias de prioridad en RF-18,
+RF-19, RF-20 y RF-22. Estas inconsistencias fueron corregidas y verificadas
+mediante el archivo \texttt{Trello\_Import\_SGCV\_IA.csv}.
+
+Para M6 se consideraron los defectos identificados durante la revisión de los
+25 requisitos funcionales y se verificó su corrección en la versión final del
+ERS. La evidencia complementaria utilizada para comprobar la prioridad y el
+caso de uso asociado a cada RF corresponde al archivo
+\texttt{Trello\_Import\_SGCV\_IA.csv}.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Conteos base de la auditoría}
+\label{tab:conteos}
+\begin{tabular}{|p{7.2cm}|c|p{6.0cm}|}
+\hline
+\textbf{Concepto} & \textbf{Valor} & \textbf{Procedencia} \\ \hline
+Requisitos funcionales (RF) & 25 &
+Tarjetas RF-01 a RF-24 y RF-26, Sección 3.2 \\ \hline
+Requisitos no funcionales (RNF) & 16 &
+Columna Métrica/Criterio de aceptación de la tabla de RNF \\ \hline
+Total auditado (RF + RNF) & 41 &
+Suma de los anteriores \\ \hline
+Casos de uso identificados & 10 &
+Diagrama de casos de uso, Sección 4.1 \\ \hline
+Casos de uso especificados & 10 &
+Especificaciones individuales, Sección 4.2 \\ \hline
+Actores humanos (actor principal) & 5 &
+Administrador, Médico veterinario, Personal administrativo, Cliente, Bodeguero \\ \hline
+Requisitos con criterio comprobable & 41 &
+25 criterios de aceptación de RF y 16 de RNF \\ \hline
+Filas RF$\to$CU en la matriz de trazabilidad & 25 &
+Tabla 29 (23 filas) más matriz alterna Ley$\to$RL$\to$RF
+(2 filas: RF-24, RF-26) \\ \hline
+RF verificados contra el tablero Trello & 25 &
+\texttt{Trello\_Import\_SGCV\_IA.csv} \\ \hline
+Defectos residuales tras la corrección & 0 &
+Verificación final de D-01 y D-02 \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Tabla de auditoría con la aritmética de cada métrica}
+
+\begin{longtable}{|p{3.4cm}|p{3.2cm}|c|c|c|c|}
+\hline
+\textbf{Métrica} &
+\textbf{Fórmula} &
+\textbf{Aritmética} &
+\textbf{Valor} &
+\textbf{Ref.} &
+\textbf{Cumple} \\ \hline
+\endfirsthead
+
+\hline
+\textbf{Métrica} &
+\textbf{Fórmula} &
+\textbf{Aritmética} &
+\textbf{Valor} &
+\textbf{Ref.} &
+\textbf{Cumple} \\ \hline
+\endhead
+
+M1a Completitud de atributos &
+requisitos con los 4 atributos / requisitos &
+$25/25$ &
+100\,\% &
+$\geq 95\,\%$ &
+Sí \\ \hline
+
+M1b Especificación de casos de uso &
+CU especificados / CU identificados &
+$10/10$ &
+100\,\% &
+100\,\% &
+Sí \\ \hline
+
+M1c Cobertura de actores &
+actores con $\geq 1$ RF / actores &
+$5/5$ &
+100\,\% &
+100\,\% &
+Sí \\ \hline
+
+M2 Consistencia &
+$1-$ conflictos / pares analizados &
+$1-0/31$ &
+1,00 &
+$\geq 0{,}98$ &
+Sí \\ \hline
+
+M3 Verificabilidad &
+requisitos con criterio comprobable / requisitos &
+$41/41$ &
+100\,\% &
+$\geq 90\,\%$ &
+Sí \\ \hline
+
+M4ade Trazabilidad adelante (RF$\to$CU) &
+RF trazados a un CU específico / RF &
+$25/25$ &
+100\,\% &
+$\geq 90\,\%$ &
+Sí \\ \hline
+
+M4atr Trazabilidad atrás &
+RF con fuente / RF &
+$25/25$ &
+100\,\% &
+100\,\% &
+Sí \\ \hline
+
+M5 Modificabilidad &
+$\sum$ requisitos afectados / muestra &
+$17/5$ &
+3,4 &
+$\leq 3{,}0$ &
+No \\ \hline
+
+M6 Corrección &
+defectos residuales / requisitos &
+$0/25$ &
+0,00 &
+$\leq 0{,}05$ &
+Sí \\ \hline
+
+\caption{Auditoría de calidad del ERS final}
+\label{tab:auditoria}
+\end{longtable}
+
+\section{Corrección del enrutamiento de requisitos a casos de uso}
+
+La revisión de la Matriz de Trazabilidad identificó que 18 de los 23 RF
+registrados directamente en dicha matriz estaban asociados al caso de uso
+genérico CU-02 (\emph{Registrar Atención Clínica}). La revisión de la evidencia
+registrada en el tablero \texttt{Trello\_Import\_SGCV\_IA.csv} permitió
+establecer el caso de uso específico correspondiente a cada requisito.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Enrutamiento de requisitos a casos de uso}
+\label{tab:correccion-cu}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{RF} & \textbf{CU en la matriz original} & \textbf{CU verificado} \\ \hline
+RF-01 & CU-02 & CU-01 \\ \hline
+RF-03 & CU-02 & CU-03 \\ \hline
+RF-04 & CU-02 & CU-02 \\ \hline
+RF-05 & CU-02 & CU-04 \\ \hline
+RF-06 & CU-02 & CU-04 \\ \hline
+RF-07 & CU-02 & CU-07 \\ \hline
+RF-08 & CU-02 & CU-07 \\ \hline
+RF-09 & CU-02 & CU-09 \\ \hline
+RF-10 & CU-02 & CU-09 \\ \hline
+RF-11 & CU-02 & CU-10 \\ \hline
+RF-12 & CU-02 & CU-10 \\ \hline
+RF-13 & CU-02 & CU-08 \\ \hline
+RF-14 & CU-02 & CU-08 \\ \hline
+RF-15 & CU-02 & CU-02 \\ \hline
+RF-17 & CU-02 & CU-06 \\ \hline
+RF-18 & CU-02 & CU-06 \\ \hline
+RF-19 & CU-02 & CU-06 \\ \hline
+RF-21 & CU-02 & CU-02 \\ \hline
+\end{tabular}
+\end{table}
+
+De los 18 RF originalmente asociados a CU-02, 15 corresponden a casos de uso
+específicos distintos y tres permanecen asociados a CU-02. El resultado
+establece un vínculo específico entre cada requisito funcional y su caso de
+uso correspondiente.
+
+\section{Lectura interpretativa de cada métrica}
+
+\subsubsection*{M1 Completitud}
+
+Los tres indicadores de completitud alcanzan 100\,\%. Los 25 RF cumplen con
+los atributos establecidos en la plantilla de requisitos, los 10 casos de uso
+identificados cuentan con su especificación correspondiente en la Sección 4.2
+y los cinco actores humanos considerados en la auditoría participan como actor
+principal en al menos un caso de uso.
+
+Por tanto, M1 alcanza el nivel máximo establecido para la auditoría.
+
+\subsubsection*{M2 Consistencia}
+
+M2 se calcula como uno menos la razón entre conflictos detectados y pares
+analizados. Se revisaron 25 pares correspondientes a la prioridad de cada RF
+frente a la tabla consolidada de MoSCoW y seis pares adicionales de contenido
+entre requisitos relacionados.
+
+La revisión identificó inconsistencias de prioridad en RF-18, RF-19, RF-20 y
+RF-22. El archivo \texttt{Trello\_Import\_SGCV\_IA.csv} registra
+\emph{Should have} para estos cuatro requisitos, coincidiendo con la tabla
+consolidada de MoSCoW. Esta evidencia establece la prioridad registrada en la
+versión final del ERS.
+
+Los 31 pares revisados presentan consistencia, por lo que:
+
+\[
+M2 = 1-\frac{0}{31}=1{,}00
+\]
+
+El resultado cumple el umbral establecido de $\geq 0{,}98$.
+
+\subsubsection*{M3 Verificabilidad}
+
+Los 41 requisitos auditados, correspondientes a 25 RF y 16 RNF, cuentan con
+criterios de aceptación comprobables. Los criterios incluyen umbrales
+cuantificables relacionados con tiempos de respuesta, porcentajes, plazos o
+número de pasos.
+
+En el caso de RNF-01, aunque la descripción emplea el término ``rapidez'', la
+métrica asociada establece un tiempo de respuesta $\leq 2$ segundos en el
+95\,\% de las búsquedas. Por tanto, el requisito dispone de un criterio
+comprobable.
+
+En consecuencia:
+
+\[
+M3=\frac{41}{41}=100\,\%
+\]
+
+\subsubsection*{M4 Trazabilidad}
+
+La trazabilidad adelante se evalúa mediante el vínculo
+RF$\rightarrow$CU. Los 25 requisitos funcionales cuentan con un caso de uso
+específico asociado, por lo que la cobertura alcanza:
+
+\[
+M4ade=\frac{25}{25}=100\,\%
+\]
+
+La revisión del enrutamiento permitió establecer asociaciones específicas entre
+los requisitos funcionales y sus correspondientes casos de uso. Los requisitos
+RF-04, RF-15 y RF-21 mantienen su asociación con CU-02.
+
+La trazabilidad atrás también alcanza el 100\,\%, dado que los 25 RF cuentan
+con una fuente documentada. Las fuentes corresponden a evidencias de
+entrevistas y, para RF-24 y RF-26, al análisis normativo asociado a la LOPDP.
+
+Por tanto, los indicadores considerados en la auditoría presentan una
+cobertura del 100\,\%.
+
+\subsubsection*{M5 Modificabilidad}
+
+El grafo de dependencias se construyó a partir del campo
+``Dependencias'' declarado en los 25 RF. Para la muestra de los cinco
+requisitos con mayor grado de entrada, la suma de requisitos afectados es 17.
+
+Por tanto:
+
+\[
+M5=\frac{17}{5}=3{,}4
+\]
+
+El valor obtenido supera el umbral establecido de $\leq 3{,}0$, por lo que
+M5 no cumple el criterio definido para esta métrica.
+
+El mayor grado de dependencia corresponde a RF-04, asociado al registro y
+actualización del historial clínico. RF-02 presenta también un grado elevado
+de dependencia. Estos resultados identifican una concentración de relaciones
+entre requisitos dentro de los componentes funcionales del sistema.
+
+\subsubsection*{M6 Corrección}
+
+M6 mide la proporción de defectos residuales respecto del total de requisitos
+funcionales auditados.
+
+Durante la revisión final se verificaron los dos defectos identificados en la
+auditoría: D-01, relacionado con la prioridad de RF-18, RF-19, RF-20 y RF-22,
+y D-02, relacionado con el enrutamiento de requisitos hacia casos de uso.
+
+El archivo \texttt{Trello\_Import\_SGCV\_IA.csv} permitió verificar la
+prioridad y el caso de uso correspondiente. Las correcciones se encuentran
+incorporadas en la versión final del ERS.
+
+La revisión final registra cero defectos residuales entre los 25 requisitos
+funcionales:
+
+\[
+M6=\frac{0}{25}=0{,}00
+\]
+
+El resultado cumple el umbral establecido de $\leq 0{,}05$.
+
+\section{Valoración global}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Valoración ponderada de la auditoría}
+\label{tab:valoracion}
+\begin{tabular}{|p{4.2cm}|c|c|c|p{5.0cm}|}
+\hline
+\textbf{Métrica} &
+\textbf{Peso} &
+\textbf{Nivel (0--4)} &
+\textbf{Aporte} &
+\textbf{Criterio del nivel} \\ \hline
+
+M1 Completitud &
+0,20 &
+4 &
+0,80 &
+Los tres indicadores alcanzan 100\,\% \\ \hline
+
+M2 Consistencia &
+0,15 &
+4 &
+0,60 &
+1,00 sobre 31 pares revisados \\ \hline
+
+M3 Verificabilidad &
+0,20 &
+4 &
+0,80 &
+41 de 41 requisitos con criterio comprobable \\ \hline
+
+M4 Trazabilidad &
+0,20 &
+2 &
+0,40 &
+Los indicadores de trazabilidad considerados alcanzan 100\,\% de cobertura \\ \hline
+
+M5 Modificabilidad &
+0,10 &
+2 &
+0,20 &
+3,4 frente al umbral establecido de $\leq 3{,}0$ \\ \hline
+
+M6 Corrección &
+0,15 &
+4 &
+0,60 &
+0,00 defectos residuales sobre 25 RF \\ \hline
+
+\textbf{Total} &
+\textbf{1,00} &
+--- &
+\textbf{3,40} &
+Sobre 4,00 (85\,\%) \\ \hline
+
+\end{tabular}
+\end{table}
+
+La valoración ponderada de la auditoría es:
+
+\begin{equation}
+(4\times0{,}20)+(4\times0{,}15)+(4\times0{,}20)
++(2\times0{,}20)+(2\times0{,}10)+(4\times0{,}15)
+=3{,}40
+\end{equation}
+
+El resultado corresponde a una valoración de:
+
+\[
+\boxed{3{,}40\text{ sobre }4{,}00\;(85\,\%)}
+\]
+
+La auditoría muestra cumplimiento en M1, M2, M3 y M6. M4 presenta una
+cobertura del 100\,\% en los vínculos de trazabilidad evaluados, mientras que
+M5 obtiene un valor de 3,4, superior al umbral de 3,0 definido para la
+métrica.
+
+En conjunto, la versión final del ERS alcanza una valoración ponderada de
+3,40 sobre 4,00, equivalente al 85\,\% del nivel máximo de calidad considerado
+en la auditoría.
