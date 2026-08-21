@@ -1,1 +1,88 @@
+\subsection{Gestión y trazabilidad}\label{gestiuxf3n-y-trazabilidad}
 
+\subsubsection{Trazabilidad end-to-end e integración del ERS}\label{trazabilidad-end-to-end}
+
+La trazabilidad end-to-end del SGCV-IA conecta cada requisito con su
+origen (Fuente/Stakeholder) y con todo lo que se deriva de él (Caso de
+Uso, Clase de dominio, Estado, Criterio BDD, Caso de Prueba conceptual),
+conforme a la cadena mínima exigida por la guía de la PE5:
+Fuente/Stakeholder $\rightarrow$ RF $\rightarrow$ CU $\rightarrow$ Clase
+UML $\rightarrow$ Estado $\rightarrow$ Criterio BDD $\rightarrow$ Caso
+de Prueba.
+
+\paragraph{Verificación de correcciones de la auditoría anterior}
+
+Se verificaron los dos hallazgos críticos de la ronda anterior sobre
+\texttt{main.tex}, ambos confirmados como resueltos:
+
+\begin{itemize}
+\item \textbf{Colisión de ID (RF-25):} el identificador RF-25 quedó
+  correctamente reservado para el requisito aprobado por el CCB en
+  PE4 (confirmación de asistencia a citas), y RF-26 (Portal de
+  ejercicio de derechos ARCO) fue reasignado sin conflicto.
+\item \textbf{Contenido de otro dominio:} el texto ajeno al proyecto
+  ("predicción de cosecha") detectado en la fila Could-have de la
+  matriz MoSCoW fue eliminado; la fila describe correctamente
+  "Ninguno (0 RF)" en ese nivel de prioridad.
+\end{itemize}
+
+\paragraph{Incorporación del Diagrama de Clases v3.1}
+
+La auditoría de trazabilidad identificó 12 de los 26 RF de esta
+matriz (RF-07, RF-08, RF-11, RF-12, RF-14, RF-15, RF-16, RF-17,
+RF-18, RF-19, RF-24, RF-26) sin una clase de dominio correspondiente
+en el Diagrama de Clases Conceptual, por desactualización del modelo
+UML respecto al ERS vigente. Se incorporó el Diagrama de Clases
+v3.1 (\texttt{DIAGRAMA DE CLASES REFINADOS v3.1.pdf}), que agrega
+cinco clases nuevas --- \textit{Cita}, \textit{Factura},
+\textit{SugerenciaIA}, \textit{Consentimiento} y
+\textit{SolicitudARCO} --- y resuelve RF-16 reutilizando el método
+existente \texttt{HistorialClinico.exportarPDF()}, sin requerir una
+clase \textit{Reporte} independiente. Con esta actualización, las 26
+filas de la Matriz de Trazabilidad Final quedan con Estado
+\textit{Completa} en su columna Clase UML.
+
+\paragraph{Sincronización backlog $\leftrightarrow$ ERS}
+
+Se verificó la sincronización entre el product backlog (tablero
+Trello, exportado en \texttt{Trello\_Import\_SGCV\_IA.csv}) y el ERS
+vigente: cada uno de los 25 RF activos (RF-01 a RF-24, RF-26; RF-25
+reservado) cuenta con al menos una historia de usuario asociada
+(HU-01 a HU-25), y cada historia referencia un RF de origen
+existente. Sincronización alcanzada: \textbf{100\% (25/25 RF)}, sin
+historias huérfanas.
+
+\paragraph{Huérfanos y cadenas rotas}
+
+De los seis hallazgos registrados en la auditoría de trazabilidad,
+los dos críticos (colisión de ID, contenido de otro dominio) ya
+estaban resueltos al inicio de esta ronda; el hallazgo de clases sin
+modelar quedó resuelto con el Diagrama de Clases v3.1 (ver arriba).
+No se identificaron requisitos huérfanos (sin fuente) ni artefactos
+huérfanos (casos de uso, clases o pruebas sin requisito asociado)
+adicionales tras esta corrección.
+
+\subsubsection{Resumen para el informe}
+
+El modelado UML del SGCV-IA mantiene los diez casos de uso de la
+iteración anterior (CU-01 a CU-10). El Diagrama de Clases Conceptual
+(Tabla 11) se amplió en la versión v3.1 con cinco clases adicionales
+--- Cita, Factura, SugerenciaIA, Consentimiento y SolicitudARCO ---,
+más el reuso de HistorialClinico.exportarPDF() para RF-16, cerrando
+la brecha detectada en la auditoría anterior. Con esta actualización,
+los 12 RF que carecían de clase de dominio asociada quedan con
+trazabilidad completa hacia el modelo de dominio.
+
+La secuencia CCB (PE4) $\rightarrow$ análisis LOPDP (Usar.tex)
+$\rightarrow$ auditoría de trazabilidad (PE5) $\rightarrow$
+corrección (\texttt{main.tex}) es, en sí misma, un ejemplo
+funcionando de ciclo de gestión de requisitos: un cambio se aprueba
+y se documenta (CCB), otro subequipo detecta con evidencia
+verificable un hallazgo (auditoría de trazabilidad), y el equipo lo
+corrige en la siguiente revisión del documento, dejando además una
+nota explícita de por qué se resolvió así. Esto confirma, con un
+caso real y completo del propio equipo, que la matriz de
+trazabilidad cumple su función cuando se trata como un artefacto
+vivo que se audita después de cada línea base, y que el ciclo
+completo (detectar, decidir, corregir, verificar) es más valioso que
+cualquiera de sus pasos por separado.
