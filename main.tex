@@ -340,7 +340,7 @@ Tabla de contenido
 \hyperref[clasificaciuxf3n-de-requisitos]{Clasificación de requisitos
 37}
 
-\hyperref[_bookmark61]{Restricciones Clasificadas 38}
+\hyperref[_bookmark103]{Restricciones Clasificadas 38}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -407,7 +407,7 @@ EVIDENCIAS DE ELICITACIÓN 44}
   \hyperref[formularios-de-consentimiento-firmados]{Formularios de
   consentimiento firmados 47}
 \item
-  \hyperref[uxedndice-de-multimedia-con-enlaces]{Índice de multimedia
+  \hyperref[indice-de-multimedia-con-enlaces]{Índice de multimedia
   con enlaces 50}
 \end{enumerate}
 
@@ -1789,8 +1789,6 @@ SGCV-IA.
 \end{center}
 
 \protect\phantomsection\label{_bookmark53}{}Ilustración 30. Configuración del Perfil Administrativo
-
-\protect\phantomsection\label{_bookmark35}{}
 
 \subparagraph{Prototipo interactivo en
 Figma}\label{prototipo-interactivo-en-figma}
@@ -3274,7 +3272,7 @@ función observable del sistema.
 A continuación, se formalizan los requisitos no funcionales (RNF) de
 SGCV-IA, clasificados conforme al modelo de calidad ISO/IEC 25010:2023 y
 vinculados a los requisitos crudos (RC) que les dieron origen. Se
-formalizaron 16 RNF (RNF-01 a RNF-16), superando el mínimo de 15
+formalizaron 18 RNF (RNF-01 a RNF-18), superando el mínimo de 15
 exigido por la rúbrica; RNF-16 incorpora el requisito de explicabilidad
 de las sugerencias del módulo de Inteligencia Artificial.
 \end{quote}
@@ -3392,6 +3390,19 @@ acompañan de al menos los tres factores de mayor peso considerados y un
 indicador de confianza (alto/medio/bajo), visibles antes de que el
 veterinario decida aceptar, modificar o rechazar. & RC-17, RC-18, RC-19
 \\
+\textbf{RNF-17} & Privacidad (Conservación de datos) & El sistema
+debe aplicar políticas de retención sobre los datos personales del
+propietario y eliminarlos o anonimizarlos automáticamente al vencer
+el plazo de conservación definido. & 100\% de los registros con
+plazo de conservación vencido eliminados o anonimizados dentro de
+un máximo de 30 días desde el vencimiento. & LOPDP Art. 10 lit. i)
+(RL-03) \\
+\textbf{RNF-18} & Privacidad (Respuesta a incidentes) & El sistema
+y el equipo responsable deben contar con un procedimiento
+documentado para notificar vulneraciones de seguridad de datos
+personales. & Notificación a la Autoridad de Protección de Datos en
+un plazo $\leq$ 5 días desde la detección, y al titular afectado en
+un plazo $\leq$ 3 días. & LOPDP Art. 43, 46 (RL-13) \\
 \end{longtable}
 }
 
@@ -3448,16 +3459,16 @@ libre, específico, informado e inequívoco antes de tratar datos
 personales del propietario. & RF-24 \\
 \textbf{RL-02} & Art. 10 lit. e) & El sistema debe limitar la
 recolección de datos a los estrictamente necesarios para la finalidad
-clínica y administrativa declarada. & RF-04, RF-07 \\
+clínica y administrativa declarada. & RF-01 \\
 \textbf{RL-03} & Art. 10 lit. i) & El sistema debe conservar los datos
 personales solo durante el plazo necesario y eliminarlos o anonimizarlos
-al vencer dicho plazo. & RNF-13 \\
+al vencer dicho plazo. & RNF-17 \\
 \textbf{RL-04} & Art. 12 & El sistema debe informar al titular sobre las
 finalidades del tratamiento de sus datos. & RF-26 \\
 \textbf{RL-05} & Art. 13 & El sistema debe permitir al titular solicitar
 acceso a sus datos personales, atendible en 15 días. & RF-26 \\
 \textbf{RL-06} & Art. 14 & El sistema debe permitir al titular solicitar
-la rectificación de sus datos personales, atendible en 15 días. & RF-02,
+la rectificación de sus datos personales, atendible en 15 días. &
 RF-26 \\
 \textbf{RL-07} & Art. 15 & El sistema debe permitir al titular solicitar
 la eliminación de sus datos personales, atendible en 15 días. & RF-26 \\
@@ -3476,7 +3487,7 @@ licitud y garantías contractuales. & RF-10, RNF-10 \\
 seguridad desde el diseño y por defecto. & RNF-05, RNF-12 \\
 \textbf{RL-13} & Art. 43, 46 & El equipo responsable debe contar con un
 procedimiento documentado para notificar vulneraciones de seguridad a la
-Autoridad ($\leq$ 5 días) y al titular ($\leq$ 3 días). & RNF-13 \\
+Autoridad ($\leq$ 5 días) y al titular ($\leq$ 3 días). & RNF-18, RF-23 \\
 \textbf{RL-14} & Art. 47, 48 & Debe designarse un responsable del
 tratamiento y, de corresponder, un Delegado de Protección de Datos. &
 Restricción de diseño (RST) \\
@@ -4421,7 +4432,7 @@ para un total de 64 elementos clasificados.
 \endlastfoot
 Requisito Funcional (RF) & 25 & RF-01 a RF-24, RF-26 (RF-25 reservado,
 PE4) \\
-Requisito No Funcional (RNF) & 16 & RNF-01 a RNF-16 \\
+Requisito No Funcional (RNF) & 18 & RNF-01 a RNF-18 \\
 Restricción (RST) & 9 & RST-01 a RST-09 \\
 Requisito Legal (RL) & 14 & RL-01 a RL-14 \\
 \end{longtable}
@@ -4645,7 +4656,7 @@ Pantalla}\strut
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-RF-01 & RF & Must & Desempeño & Alto & IEEE 29148 & CU-01 &
+RF-01 & RF & Must & Desempeño & Alto & IEEE 29148, LOPDP Art. 10 lit. e) & CU-01 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Todas las pantallas\\
 (responsive)\strut
@@ -4660,7 +4671,7 @@ RF-03 & RF & Must & Desempeño & Alto & --- & CU-03 &
 Gestión de\\
 Historiales Clínicos\strut
 \end{minipage} \\
-RF-04 & RF & Must & Básico & Alto & LOPDP Art. 4 & CU-02 &
+RF-04 & RF & Must & Básico & Alto & --- & CU-02 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Registro de\\
 Consulta\strut
@@ -4675,22 +4686,22 @@ RF-06 & RF & Must & Desempeño & Medio & --- & CU-04 &
 Inventario de\\
 Bodega\strut
 \end{minipage} \\
-RF-07 & RF & Must & Básico & Alto & --- & CU-02 &
+RF-07 & RF & Must & Básico & Alto & --- & CU-07 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Facturación y\\
 Cobro\strut
 \end{minipage} \\
-RF-08 & RF & Must & Atractivo & Alto & --- & CU-02 &
+RF-08 & RF & Must & Atractivo & Alto & --- & CU-07 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Facturación y\\
 Cobro\strut
 \end{minipage} \\
-RF-09 & RF & Must & Básico & Medio & LOPDP Art. 4 & CU-02 &
+RF-09 & RF & Must & Básico & Medio & --- & CU-02 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Comunicación\\
 con Dueños\strut
 \end{minipage} \\
-RF-10 & RF & Must & Atractivo & Medio & LOPDP Art. 4 & CU-02 &
+RF-10 & RF & Must & Atractivo & Medio & LOPDP Art. 33, 34, 35 & CU-02 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Comunicación\\
 con Dueños\strut
@@ -4750,15 +4761,15 @@ Selección de rol\strut
 \end{minipage} \\
 RF-21 & RF & Should & Desempeño & Medio & --- & CU-02 & Dashboard
 general* \\
-RF-22 & RF & Should & Básico & Alto & LOPDP Art. 4 & CU-01 &
+RF-22 & RF & Should & Básico & Alto & --- & CU-01 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Gestión de Usuarios\\
 y Accesos\strut
 \end{minipage} \\
 RF-23 & RF & Should & Básico & Alto &
 \begin{minipage}[t]{\linewidth}\raggedright
-LOPDP Art. 4\\
-(auditoría)\strut
+LOPDP Art. 43, 46\\
+(RL-13, auditoría)\strut
 \end{minipage} & CU-03 & \begin{minipage}[t]{\linewidth}\raggedright
 Gestión de\\
 Historiales Clínicos*\strut
@@ -4791,13 +4802,13 @@ RNF-04 & RNF & Must & Básico & Medio & ISO/IEC 25010 & CU-02 & Dashboard
 general* \\
 RNF-05 & RNF & Must & Básico & Alto &
 \begin{minipage}[t]{\linewidth}\raggedright
-LOPDP Art. 4 +\\
+LOPDP Art. 37, 39 +\\
 ISO/IEC 25010\strut
 \end{minipage} & CU-01 & \begin{minipage}[t]{\linewidth}\raggedright
 Login / Gestión\\
 de Usuarios\strut
 \end{minipage} \\
-RNF-06 & RNF & Should & Básico & Medio & LOPDP Art. 4 & CU-03 &
+RNF-06 & RNF & Should & Básico & Medio & --- & CU-03 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Gestión de\\
 Historiales Clínicos*\strut
@@ -4840,16 +4851,20 @@ RST-05\\
 Panel de\\
 Diagnóstico IA\strut
 \end{minipage} \\
+RNF-17 & RNF & Must & Básico & Alto & LOPDP Art. 10 lit. i) & --- &
+No aplica (proceso automatizado interno) \\
+RNF-18 & RNF & Must & Básico & Alto & LOPDP Art. 43, 46 & --- &
+No aplica (procedimiento operativo) \\
 RST-01 & RST & N/A & N/A & Alto & --- & --- & No aplica \\
-RST-02 & RST & N/A & N/A & Alto & LOPDP & CU-01 / CU-03 & No aplica \\
-RST-03 & RST & N/A & N/A & Alto & LOPDP Art. 4 & CU-01 & No aplica \\
+RST-02 & RST & N/A & N/A & Alto & --- & CU-01 & No aplica \\
+RST-03 & RST & N/A & N/A & Alto & --- & CU-02 & No aplica \\
 RST-04 & RST & N/A & N/A & Medio & --- & --- & No aplica \\
 RST-05 & RST & N/A & N/A & Alto & --- & CU-02 &
 \begin{minipage}[t]{\linewidth}\raggedright
 Panel de\\
 Diagnóstico IA\strut
 \end{minipage} \\
-RST-06 & RST & N/A & N/A & Medio & --- & CU-02 &
+RST-06 & RST & N/A & N/A & Medio & --- & CU-01 &
 \begin{minipage}[t]{\linewidth}\raggedright
 No aplica\\
 (módulo interno)\strut
@@ -6148,16 +6163,6 @@ completo)}\label{clasificaciuxf3n-y-priorizaciuxf3n-moscow-detalle-completo}
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-\protect\phantomsection\label{_bookmark101}{}\textbf{Clasificación de
-Requisitos}
-\end{enumerate}
-
-\paragraph{Clasificación y priorización MoSCoW (detalle
-completo)}\label{clasificaciuxf3n-y-priorizaciuxf3n-moscow-detalle-completo}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
   \protect\phantomsection\label{_bookmark101}{}\textbf{Clasificación de
   Requisitos}
 \end{enumerate}
@@ -6165,7 +6170,7 @@ completo)}\label{clasificaciuxf3n-y-priorizaciuxf3n-moscow-detalle-completo}
 \begin{quote}
 Se clasifican los tres tipos de artefactos identificados en este
 documento: Requisitos Funcionales (RF), Requisitos No Funcionales (RNF)
-y Restricciones (RST), para un total de 50 elementos (25 RF + 16 RNF +
+y Restricciones (RST), para un total de 52 elementos (25 RF + 18 RNF +
 9 RST).
 \end{quote}
 
@@ -6194,7 +6199,7 @@ Requisito Funcional (RF)
 \end{minipage} & 25 & RF-01 a RF-26 & Sección 3.2 \\
 \begin{minipage}[t]{\linewidth}\raggedright
 Requisito No Funcional (RNF)
-\end{minipage} & 16 & RNF-01 a RNF-16 & Sección 3.3 \\
+\end{minipage} & 18 & RNF-01 a RNF-18 & Sección 3.3 \\
 Restricción (RST) & 9 & RST-01 a RST-09 & Secciones 2.6 / 3.4 \\
 Requisito Legal (RL) & 14 & RL-01 a RL-14 & Sección 3.4 \\
 \end{longtable}
@@ -6225,29 +6230,51 @@ clasificadas}\label{detalle-de-restricciones-clasificadas}
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-RST-01 & Base de datos relacional (PostgreSQL/MySQL); sin NoSQL como
-almacenamiento principal. & \begin{minipage}[t]{\linewidth}\raggedright
-Tecnológica
-\end{minipage} \\
-RST-02 & Cumplimiento de la normativa ecuatoriana de protección de datos
-personales (LOPDP). & \begin{minipage}[t]{\linewidth}\raggedright
-Regulatoria
-\end{minipage} \\
-RST-03 & Autenticación y control de acceso basado en roles (RBAC)
-obligatorios. & \begin{minipage}[t]{\linewidth}\raggedright
-Seguridad
-\end{minipage} \\
-RST-04 & Priorización de frameworks y bibliotecas de código abierto. &
-\begin{minipage}[t]{\linewidth}\raggedright
+RST-01 & El sistema debe contemplar un modelo de costos accesible para
+una clínica veterinaria pequeña, priorizando bajo costo de
+implementación y operación. & \begin{minipage}[t]{\linewidth}\raggedright
 Presupuestaria
 \end{minipage} \\
-RST-05 & Arquitectura cliente-servidor con API REST; módulo de IA
-desacoplado del backend. & \begin{minipage}[t]{\linewidth}\raggedright
+RST-02 & El sistema debe diseñarse con una arquitectura que permita
+su ejecución multiplataforma (web y/o móvil) sin duplicar la lógica
+de negocio. & \begin{minipage}[t]{\linewidth}\raggedright
+Tecnológica
+\end{minipage} \\
+RST-03 & El módulo de sincronización offline debe implementarse
+mediante cola local de operaciones, sin réplica completa de la base
+de datos en el cliente. & \begin{minipage}[t]{\linewidth}\raggedright
+Técnica / Hardware
+\end{minipage} \\
+RST-04 & El módulo de Inteligencia Artificial debe mantenerse
+desacoplado del backend principal (arquitectura cliente-servidor con
+API REST). & \begin{minipage}[t]{\linewidth}\raggedright
 Arquitectónica
 \end{minipage} \\
-RST-06 & Sincronización offline mediante cola local de operaciones, no
-réplica completa de BD en cliente. & \begin{minipage}[t]{\linewidth}\raggedright
-Técnica / Hardware
+RST-05 & Toda sugerencia generada por el módulo de IA debe quedar
+sujeta a revisión y validación humana antes de aplicarse. &
+\begin{minipage}[t]{\linewidth}\raggedright
+Ética / Regulatoria
+\end{minipage} \\
+RST-06 & El sistema debe implementar control de acceso basado en
+roles (RBAC), restringiendo cada módulo según el perfil del usuario
+autenticado. & \begin{minipage}[t]{\linewidth}\raggedright
+Seguridad
+\end{minipage} \\
+RST-07 & El registro de auditoría de los historiales clínicos no
+debe permitir edición ni eliminación retroactiva. &
+\begin{minipage}[t]{\linewidth}\raggedright
+Seguridad
+\end{minipage} \\
+RST-08 & El sistema no debe emitir diagnósticos definitivos ni
+prescripciones automatizadas; toda salida del módulo de IA tiene
+carácter de sugerencia sujeta a decisión del veterinario. &
+\begin{minipage}[t]{\linewidth}\raggedright
+Regulatoria / Alcance
+\end{minipage} \\
+RST-09 & El sistema no debe integrarse con sistemas gubernamentales
+de salud animal ni emitir facturación electrónica certificada ante
+el SRI en la versión 1.0. & \begin{minipage}[t]{\linewidth}\raggedright
+Regulatoria / Alcance
 \end{minipage} \\
 \end{longtable}
 }
@@ -6606,10 +6633,10 @@ EV-02 & RF-05 --- Control de inventario con alertas de vencimiento &
 CU-04 Controlar Inventario \\
 EV-01, EV-02 & RF-06 --- Gestión de stock con alertas de faltantes &
 CU-04 Controlar Inventario \\
-EV-02 & RF-07 --- Registro del proceso de cobro & CU-02 Registrar
-Atención Clínica \\
-EV-02 & RF-08 --- Módulo de facturación ágil & CU-02 Registrar Atención
-Clínica \\
+EV-02 & RF-07 --- Registro del proceso de cobro & CU-07 Gestionar
+Facturación y Cobro \\
+EV-02 & RF-08 --- Módulo de facturación ágil & CU-07 Gestionar
+Facturación y Cobro \\
 EV-01 & RF-09 --- Registro de comunicaciones post-consulta & CU-02
 Registrar Atención Clínica \\
 EV-02 & RF-10 --- Envío de resultados por WhatsApp & CU-02 Registrar
@@ -6771,11 +6798,7 @@ El registro de commits permite documentar de manera cronológica los cambios rea
 
 Los commits deben mantener una estructura consistente que permita identificar fácilmente el propósito de cada modificación. Para ello, se recomienda utilizar mensajes breves, descriptivos y relacionados directamente con la actividad realizada en el proyecto.
 
-El historial de commits debe evidenciar el desarrollo progresivo del proyecto, incluyendo modificaciones relacionadas con la documentación, evidencias, modelado, trazabilidad, MVP, experimentación y publicación. De esta manera, el repositorio permite comprobar la evolución del trabajo y mantener una adecuada trazabilidad de los cambios realizados.
-
-Para la Entrega 3 (2A), el registro de commits debe conservarse dentro del repositorio Git del proyecto y mantenerse actualizado durante el desarrollo de las diferentes actividades.
-
-\subsubsection{Registro de commits}\label{registro-de-commits}
+El historial de commits debe evidenciar el desarrollo progresivo del proyecto, incluyendo modificaciones relacionadas con la documentación, evidencias, modelado, trazabilidad, auditoría de calidad, requisitos de IA y defensa técnica. De esta manera, el repositorio permite comprobar la evolución del trabajo y mantener una adecuada trazabilidad de los cambios realizados, con commits distribuidos entre los integrantes y en el tiempo, conforme a lo exigido en el criterio C8 de la Rúbrica PE5.
 
 \begin{quote}
 El repositorio de GitHub conserva un historial de los cambios realizados
