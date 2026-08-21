@@ -1,1 +1,728 @@
+% =====================================================================
+% ANEXO A — INSTRUMENTO DE AUDITORÍA DE CALIDAD DEL ERS (SGCV-IA)
+% Métricas M1–M6
+% Resultados definitivos de la auditoría sobre la versión final del ERS.
+% =====================================================================
 
+\section*{Anexo A. Instrumento de auditoría de calidad del ERS}
+
+Este instrumento registra, para cada métrica de calidad (M1--M6),
+la fórmula aplicada, los conteos utilizados, el resultado obtenido,
+el valor de referencia, la evidencia, el veredicto, la acción de
+mejora aplicada cuando corresponde y el resultado definitivo de la
+auditoría.
+
+% ---------------------------------------------------------------
+% M1a — Completitud de requisitos
+% ---------------------------------------------------------------
+\subsection*{A.1 Métrica M1a — Requisitos completos}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} & M1a — Completitud de requisitos \\
+
+\textbf{Fórmula} &
+$M1a =
+\dfrac{\text{requisitos con los 4 atributos}}
+{\text{requisitos totales}}\times100$ \\
+
+\textbf{Conteos utilizados} &
+Requisitos totales (RF) = 25 (RF-01 a RF-24 y RF-26). \newline
+Requisitos con los 4 atributos (ID, prioridad, fuente y criterio de aceptación) = 25 \\
+
+\textbf{Resultado} & 100\,\% \\
+
+\textbf{Valor de referencia} & $M1a \geq 95\,\%$ \\
+
+\textbf{Evidencia} &
+Sección 3.2 (\emph{Requisitos Funcionales}) del ERS, plantilla de
+atributos por RF, \texttt{main\_corregido.tex} \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+No aplica; los requisitos cumplen los atributos establecidos \\
+
+\textbf{Resultado definitivo} & 100\,\% \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% M1b — Casos de uso especificados
+% ---------------------------------------------------------------
+\subsection*{A.2 Métrica M1b — Casos de uso especificados}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} & M1b — Casos de uso especificados \\
+
+\textbf{Fórmula} &
+$M1b =
+\dfrac{\text{CU especificados}}
+{\text{CU identificados}}\times100$ \\
+
+\textbf{Conteos utilizados} &
+CU identificados = 10 (CU-01 a CU-10). \newline
+CU especificados = 10, considerando actor principal, actores secundarios,
+precondiciones, postcondiciones y flujo principal \\
+
+\textbf{Resultado} & 100\,\% \\
+
+\textbf{Valor de referencia} & $M1b = 100\,\%$ \\
+
+\textbf{Evidencia} &
+Sección 4.2 (\emph{Especificación de Casos de Uso}),
+\texttt{main\_corregido.tex} \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+No aplica; los casos de uso cuentan con su especificación correspondiente \\
+
+\textbf{Resultado definitivo} & 100\,\% \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% M1c — Actores relacionados
+% ---------------------------------------------------------------
+\subsection*{A.3 Métrica M1c — Actores relacionados con requisitos}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} &
+M1c — Actores relacionados con al menos un RF \\
+
+\textbf{Fórmula} &
+$M1c =
+\dfrac{\text{actores con }\geq1\text{ RF}}
+{\text{actores totales}}\times100$ \\
+
+\textbf{Conteos utilizados} &
+Actores totales = 5:
+Administrador, Médico veterinario, Personal administrativo,
+Cliente y Bodeguero. \newline
+Actores con $\geq1$ RF asociado = 5 \\
+
+\textbf{Resultado} & 100\,\% \\
+
+\textbf{Valor de referencia} & $M1c = 100\,\%$ \\
+
+\textbf{Evidencia} &
+Especificación de CU-01 a CU-10, campo \emph{Actor principal},
+\texttt{main\_corregido.tex} \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+No aplica; los cinco actores considerados presentan asociación con RF \\
+
+\textbf{Resultado definitivo} & 100\,\% \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% M2 — Consistencia
+% ---------------------------------------------------------------
+\subsection*{A.4 Métrica M2 — Consistencia}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} &
+M2 — Consistencia entre requisitos relacionados \\
+
+\textbf{Fórmula} &
+$M2 =
+1-\dfrac{\text{conflictos detectados}}
+{\text{pares analizados}}$ \\
+
+\textbf{Conteos utilizados} &
+Pares de requisitos analizados = 31:
+25 verificaciones de prioridad individual frente a la tabla consolidada
+MoSCoW y 6 pares de contenido entre requisitos relacionados. \newline
+Conflictos detectados al cierre = 0 \\
+
+\textbf{Resultado} &
+$M2=1-\dfrac{0}{31}=1{,}00$ \\
+
+\textbf{Valor de referencia} & $M2\geq0{,}98$ \\
+
+\textbf{Evidencia} &
+Comparación de la Sección 3.2 contra la Sección 3.6 del ERS y
+verificación cruzada con
+\texttt{Trello\_Import\_SGCV\_IA.csv} \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+Se unificó la prioridad de RF-18, RF-19, RF-20 y RF-22 a
+\emph{Should have}, de acuerdo con la tabla consolidada de MoSCoW
+y el tablero Trello \\
+
+\textbf{Resultado definitivo} & $M2=1{,}00$ \\
+
+\hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Tabla de pares de requisitos analizados (M2)}
+
+\begin{tabular}{p{1.6cm}p{2.2cm}p{2.2cm}p{1.6cm}p{2.4cm}p{2.6cm}p{1.6cm}}
+\hline
+\textbf{ID par} &
+\textbf{Requisito 1} &
+\textbf{Requisito 2} &
+\textbf{¿Conflicto?} &
+\textbf{Tipo de conflicto} &
+\textbf{Acción realizada} &
+\textbf{Estado} \\
+\hline
+
+P-01 & RF-01 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-02 & RF-02 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-03 & RF-03 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-04 & RF-04 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-05 & RF-05 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-06 & RF-06 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-07 & RF-07 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-08 & RF-08 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-09 & RF-09 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-10 & RF-10 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-11 & RF-11 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-12 & RF-12 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-13 & RF-13 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-14 & RF-14 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-15 & RF-15 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-16 & RF-16 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-17 & RF-17 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+
+P-18 & RF-18 & Tabla MoSCoW & Sí (corregido) &
+Prioridad Must have vs. Should have &
+Prioridad unificada a Should have &
+Cerrado \\
+
+P-19 & RF-19 & Tabla MoSCoW & Sí (corregido) &
+Prioridad Must have vs. Should have &
+Prioridad unificada a Should have &
+Cerrado \\
+
+P-20 & RF-20 & Tabla MoSCoW & Sí (corregido) &
+Prioridad Must have vs. Should have &
+Prioridad unificada a Should have &
+Cerrado \\
+
+P-21 & RF-21 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+
+P-22 & RF-22 & Tabla MoSCoW & Sí (corregido) &
+Prioridad Must have vs. Should have &
+Prioridad unificada a Should have &
+Cerrado \\
+
+P-23 & RF-23 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-24 & RF-24 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+P-25 & RF-26 & Tabla MoSCoW & No & --- & --- & Cerrado \\
+
+\hline
+
+\multicolumn{7}{p{15.9cm}}{
+\footnotesize
+Los pares P-01 a P-25 corresponden a la verificación individual de la
+prioridad de cada RF frente a la tabla consolidada de MoSCoW.
+Los seis pares adicionales corresponden a verificaciones de contenido
+entre requisitos relacionados por área funcional.
+} \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% M3 — Verificabilidad
+% ---------------------------------------------------------------
+\subsection*{A.5 Métrica M3 — Verificabilidad}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} &
+M3 — Verificabilidad de los requisitos \\
+
+\textbf{Fórmula} &
+$M3 =
+\dfrac{\text{requisitos con criterio comprobable}}
+{\text{requisitos totales}}\times100$ \\
+
+\textbf{Conteos utilizados} &
+Requisitos totales = 41 (25 RF + 16 RNF). \newline
+Requisitos con criterio comprobable = 41 \\
+
+\textbf{Resultado} & 100\,\% \\
+
+\textbf{Valor de referencia} & $M3\geq90\,\%$ \\
+
+\textbf{Evidencia} &
+Columna \emph{Criterio de aceptación} de los RF y columna
+\emph{Métrica / Criterio de aceptación} de los RNF \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+No aplica; los requisitos presentan criterios comprobables \\
+
+\textbf{Resultado definitivo} & 100\,\% \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% M4 — Trazabilidad hacia adelante
+% ---------------------------------------------------------------
+\subsection*{A.6 Métrica M4ade — Trazabilidad hacia adelante}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} &
+M4ade — Trazabilidad hacia adelante
+(RF $\rightarrow$ CU) \\
+
+\textbf{Fórmula} &
+$M4ade =
+\dfrac{\text{RF trazados a un CU específico}}
+{\text{RF totales}}\times100$ \\
+
+\textbf{Conteos utilizados} &
+RF totales = 25. \newline
+RF trazados a un CU específico = 25 \\
+
+\textbf{Resultado} &
+$M4ade=\dfrac{25}{25}=100\,\%$ \\
+
+\textbf{Valor de referencia} & $M4ade\geq90\,\%$ \\
+
+\textbf{Evidencia} &
+Matriz de Trazabilidad, Tabla 29, Sección 4 del ERS y verificación
+cruzada mediante \texttt{Trello\_Import\_SGCV\_IA.csv} \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+Se corrigió el enrutamiento de los requisitos que se encontraban
+asociados al CU-02 y se estableció el CU específico correspondiente \\
+
+\textbf{Resultado definitivo} &
+100\,\% de cobertura RF$\rightarrow$CU \\
+
+\hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Tabla de corrección del enrutamiento a CU-02}
+
+\begin{tabular}{ccc}
+\hline
+\textbf{RF} &
+\textbf{CU en la matriz original} &
+\textbf{CU verificado} \\
+\hline
+
+RF-01 & CU-02 & CU-01 \\
+RF-03 & CU-02 & CU-03 \\
+RF-04 & CU-02 & CU-02 \\
+RF-05 & CU-02 & CU-04 \\
+RF-06 & CU-02 & CU-04 \\
+RF-07 & CU-02 & CU-07 \\
+RF-08 & CU-02 & CU-07 \\
+RF-09 & CU-02 & CU-09 \\
+RF-10 & CU-02 & CU-09 \\
+RF-11 & CU-02 & CU-10 \\
+RF-12 & CU-02 & CU-10 \\
+RF-13 & CU-02 & CU-08 \\
+RF-14 & CU-02 & CU-08 \\
+RF-15 & CU-02 & CU-02 \\
+RF-17 & CU-02 & CU-06 \\
+RF-18 & CU-02 & CU-06 \\
+RF-19 & CU-02 & CU-06 \\
+RF-21 & CU-02 & CU-02 \\
+
+\hline
+\multicolumn{3}{p{9.5cm}}{
+\footnotesize
+De los 18 RF originalmente asociados a CU-02, 15 fueron asociados
+a su CU específico y 3 permanecieron vinculados a CU-02 por
+corresponder funcionalmente a dicho caso de uso.
+} \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% M4atr — Trazabilidad hacia atrás
+% ---------------------------------------------------------------
+\subsection*{A.7 Métrica M4atr — Trazabilidad hacia atrás}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} &
+M4atr — Trazabilidad hacia atrás
+(RF $\rightarrow$ fuente/stakeholder) \\
+
+\textbf{Fórmula} &
+$M4atr =
+\dfrac{\text{RF con fuente/stakeholder}}
+{\text{RF totales}}\times100$ \\
+
+\textbf{Conteos utilizados} &
+RF totales = 25. \newline
+RF con fuente/stakeholder identificado = 25 \\
+
+\textbf{Resultado} & 100\,\% \\
+
+\textbf{Valor de referencia} & $M4atr=100\,\%$ \\
+
+\textbf{Evidencia} &
+Campo \emph{Fuente} de cada RF y cobertura de trazabilidad del ERS \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+No aplica; los 25 RF cuentan con fuente documentada \\
+
+\textbf{Resultado definitivo} & 100\,\% \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% M5 — Modificabilidad
+% ---------------------------------------------------------------
+\subsection*{A.8 Métrica M5 — Modificabilidad}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} &
+M5 — Modificabilidad (impacto promedio de cambio) \\
+
+\textbf{Fórmula} &
+$M5 =
+\dfrac{\sum\text{requisitos afectados}}{n},
+\quad n\geq5$ \\
+
+\textbf{Conteos utilizados} &
+Se seleccionaron los cinco RF con mayor grado de acoplamiento
+entrante, calculado a partir del campo \emph{Dependencias} de
+los 25 RF \\
+
+\textbf{Resultado} &
+$M5=\dfrac{17}{5}=3{,}4$ \\
+
+\textbf{Valor de referencia} & $M5\leq3{,}0$ \\
+
+\textbf{Evidencia} &
+Campo \emph{Dependencias} de los RF y conteo de las relaciones
+de dependencia declaradas \\
+
+\textbf{Veredicto} & \textbf{No cumple} ($3{,}4>3{,}0$) \\
+
+\textbf{Acción de mejora} &
+Se identificó la concentración de dependencias en RF-04 y RF-02.
+Se recomienda evaluar la descomposición funcional de estos requisitos
+para reducir el acoplamiento entre requisitos relacionados \\
+
+\textbf{Resultado definitivo} &
+$M5=3{,}4$ \\
+
+\hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Tabla de requisitos seleccionados para M5}
+
+\begin{tabular}{lr}
+\hline
+\textbf{Requisito} & \textbf{Afectados} \\
+\hline
+
+RF-04 (Registro detallado del historial clínico) & 7 \\
+RF-02 (Centralización de información clínica) & 6 \\
+RF-17 (Sugerencias diagnósticas asistidas por IA) & 2 \\
+RF-18 (Respaldo bibliográfico de sugerencias de IA) & 1 \\
+RF-19 (Revisión/corrección de sugerencias de IA) & 1 \\
+
+\hline
+\textbf{Suma} & \textbf{17} \\
+\hline
+\end{tabular}
+
+\vspace{0.2cm}
+
+\noindent\footnotesize
+\textbf{Nota de método:}
+La cantidad de requisitos afectados corresponde al número de RF
+que declaran a cada requisito como dependencia. Se seleccionaron
+los cinco RF con mayor grado de entrada por representar los valores
+más elevados de impacto dentro del grafo de dependencias.
+\normalsize
+
+% ---------------------------------------------------------------
+% M6 — Corrección
+% ---------------------------------------------------------------
+\subsection*{A.9 Métrica M6 — Corrección}
+
+\begin{tabular}{p{3.2cm}p{9.5cm}}
+\hline
+\textbf{Métrica} &
+M6 — Corrección (defectos residuales) \\
+
+\textbf{Fórmula} &
+$M6 =
+\dfrac{\text{defectos residuales}}
+{\text{requisitos totales}}$ \\
+
+\textbf{Conteos utilizados} &
+Defectos residuales = 0. \newline
+Requisitos totales = 25 RF \\
+
+\textbf{Resultado} &
+$M6=\dfrac{0}{25}=0{,}00$ \\
+
+\textbf{Valor de referencia} & $M6\leq0{,}05$ \\
+
+\textbf{Evidencia} &
+Versión final del ERS y verificación cruzada mediante
+\texttt{Trello\_Import\_SGCV\_IA.csv} \\
+
+\textbf{Veredicto} & Cumple \\
+
+\textbf{Acción de mejora} &
+Se corrigió la prioridad de RF-18, RF-19, RF-20 y RF-22 y se
+corrigió el enrutamiento de los RF hacia sus casos de uso específicos \\
+
+\textbf{Resultado definitivo} &
+$M6=0{,}00$ \\
+
+\hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Registro de defectos corregidos (M6)}
+
+\begin{tabular}{p{1.4cm}p{2cm}p{4cm}p{3cm}p{1.8cm}}
+\hline
+\textbf{Defecto} &
+\textbf{Requisito afectado} &
+\textbf{Descripción} &
+\textbf{Corrección} &
+\textbf{Estado} \\
+\hline
+
+D-01 &
+RF-18, RF-19, RF-20, RF-22 &
+Inconsistencia de prioridad entre la tarjeta individual y la tabla
+consolidada de MoSCoW &
+Prioridad unificada a \emph{Should have} y verificada contra
+el tablero Trello &
+Cerrado \\
+
+D-02 &
+RF-01, RF-03, RF-05, RF-06, RF-07, RF-08, RF-09,
+RF-10, RF-11, RF-12, RF-13, RF-14, RF-17, RF-18, RF-19 &
+Asociación de requisitos con el caso de uso genérico CU-02 en la
+Matriz de Trazabilidad &
+Enrutamiento establecido hacia el CU específico correspondiente
+a cada RF &
+Cerrado \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% Tabla general de auditoría
+% ---------------------------------------------------------------
+\subsection*{A.10 Tabla general de auditoría}
+
+\begin{tabular}{lccccl}
+\hline
+\textbf{Métrica} &
+\textbf{Resultado} &
+\textbf{Resultado definitivo} &
+\textbf{Referencia} &
+\textbf{Cumple} &
+\textbf{Acción} \\
+\hline
+
+M1a &
+100\,\% &
+100\,\% &
+$\geq95\,\%$ &
+Cumple &
+Ninguna \\
+
+M1b &
+100\,\% &
+100\,\% &
+$100\,\%$ &
+Cumple &
+Ninguna \\
+
+M1c &
+100\,\% &
+100\,\% &
+$100\,\%$ &
+Cumple &
+Ninguna \\
+
+M2 &
+0,87 &
+1,00 &
+$\geq0{,}98$ &
+Cumple &
+Prioridad de RF-18/19/20/22 unificada \\
+
+M3 &
+100\,\% &
+100\,\% &
+$\geq90\,\%$ &
+Cumple &
+Ninguna \\
+
+M4ade &
+100\,\% &
+100\,\% &
+$\geq90\,\%$ &
+Cumple &
+Enrutamiento RF$\rightarrow$CU corregido \\
+
+M4atr &
+100\,\% &
+100\,\% &
+$100\,\%$ &
+Cumple &
+Ninguna \\
+
+M5 &
+3,4 &
+3,4 &
+$\leq3{,}0$ &
+No cumple &
+Revisión del acoplamiento de RF-04 y RF-02 \\
+
+M6 &
+0,08 &
+0,00 &
+$\leq0{,}05$ &
+Cumple &
+D-01 y D-02 corregidos \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% Escala de valoración y pesos
+% ---------------------------------------------------------------
+\subsection*{A.11 Escala de valoración}
+
+\begin{tabular}{cl}
+\hline
+\textbf{Valor} & \textbf{Descripción} \\
+\hline
+
+4 & Cumple con evidencia completa \\
+
+3 & Cumple con evidencia parcial \\
+
+2 & No cumple, pero existe acción de mejora documentada \\
+
+1 & No cumple y no existe acción aplicada \\
+
+0 & No se midió \\
+
+\hline
+\end{tabular}
+
+% ---------------------------------------------------------------
+% Pesos
+% ---------------------------------------------------------------
+\subsection*{A.12 Pesos de las métricas para la valoración global}
+
+\begin{tabular}{lc}
+\hline
+\textbf{Métrica} & \textbf{Peso} \\
+\hline
+
+M1 & 0,20 \\
+M2 & 0,15 \\
+M3 & 0,20 \\
+M4 & 0,20 \\
+M5 & 0,10 \\
+M6 & 0,15 \\
+
+\hline
+\end{tabular}
+
+\vspace{0.2cm}
+
+\noindent\textbf{Valoración por métrica (escala 0--4):}
+
+\begin{tabular}{lcl}
+\hline
+\textbf{Métrica} &
+\textbf{Valoración} &
+\textbf{Justificación} \\
+\hline
+
+M1 & 4 &
+Cumple con evidencia completa; M1a, M1b y M1c alcanzan 100\,\% \\
+
+M2 & 4 &
+Cumple: 1,00 sobre 31 pares revisados \\
+
+M3 & 4 &
+Cumple: 41 de 41 requisitos con criterio comprobable \\
+
+M4 & 2 &
+Trazabilidad RF$\rightarrow$CU y RF$\rightarrow$fuente con cobertura del 100\,\% \\
+
+M5 & 2 &
+No cumple; resultado 3,4 frente al límite establecido de 3,0 \\
+
+M6 & 4 &
+Cumple: 0,00 defectos residuales sobre 25 RF \\
+
+\hline
+\end{tabular}
+
+\vspace{0.2cm}
+
+\noindent\textbf{Valoración global:}
+
+\begin{equation}
+\begin{aligned}
+V &=
+(4\times0{,}20)
++(4\times0{,}15)
++(4\times0{,}20)
++(2\times0{,}20)
++(2\times0{,}10)
++(4\times0{,}15)\\
+&=0{,}80+0{,}60+0{,}80+0{,}40+0{,}20+0{,}60\\
+&=\mathbf{3{,}40}
+\end{aligned}
+\end{equation}
+
+\noindent
+La valoración global de la auditoría es:
+
+\[
+\boxed{3{,}40\text{ sobre }4{,}00\;(85\,\%)}
+\]
+
+La auditoría evidencia cumplimiento en M1, M2, M3, M4 y M6.
+M5 presenta un valor de 3,4, superior al umbral establecido de 3,0.
+En consecuencia, la versión final del ERS obtiene una valoración
+ponderada de 3,40 sobre 4,00, equivalente al 85\,\% del nivel máximo
+de calidad considerado en la auditoría.
