@@ -1,1 +1,192 @@
-
+% =====================================================================
+\section{Metodología de ingeniería de requisitos}
+\label{sec:metodologia}
+ 
+\subsection{Marco normativo aplicado}
+ 
+El ERS se estructura conforme a ISO/IEC/IEEE 29148:2018, que define el contenido de una
+especificación de requisitos de software y las características exigibles a un requisito individual y
+al conjunto \cite{iso29148}. La calidad del producto documental se interpreta con el modelo de
+ISO/IEC 25010:2023, del que la \S\ref{sec:metricas} deriva las métricas operativas usadas en la
+auditoría \cite{iso25010}. El encuadre de procesos de ciclo de vida proviene de ISO/IEC/IEEE
+15288:2023 para sistemas y de ISO/IEC/IEEE 12207:2017 para software \cite{iso15288, iso12207}, que
+sitúan la definición de requisitos de las partes interesadas y el análisis de requisitos del sistema
+dentro de los procesos técnicos.
+ 
+Los fundamentos conceptuales siguen a Pohl \cite{pohl2025} y al SWEBOK v4.0 \cite{swebok4}, y la
+lista de verificación de calidad de la especificación se apoya en el temario CPRE Foundation Level
+del IREB \cite{ireb31}. La gestión del desarrollo se organiza con Scrum \cite{cohn2004}; el PMBOK
+7.ª edición \cite{pmbok7} se emplea de forma complementaria para la planificación y el análisis de
+riesgo del proyecto integrador, sin sustituir el marco ágil que rige las iteraciones del equipo.
+ 
+Para el componente de inteligencia artificial de SGCV-IA se consideran dos marcos normativos con
+estatus distinto. La Ley Orgánica de Protección de Datos Personales del Ecuador rige de forma
+obligatoria el tratamiento de los datos personales de propietarios y los datos clínicos de las
+mascotas que el sistema recoge y procesa \cite{lopdp2021}. El Reglamento (UE) 2024/1689 no tiene
+vigencia en Ecuador y no se declara como normativa aplicable; se retiene únicamente como marco de
+referencia comparativa de buenas prácticas para la clasificación de riesgo y la transparencia de
+sistemas de IA \cite{aiact2024}, y así se indica explícitamente cada vez que se cita. Adicionalmente,
+por tratarse de un sistema para clínicas veterinarias, se consideró la normativa ecuatoriana
+sectorial de ejercicio profesional veterinario y bienestar animal como restricción de dominio sobre
+los procesos que el sistema automatiza, aunque no impone requisitos de protección de datos
+adicionales a los ya cubiertos por la LOPDP.
+ 
+\subsection{Fundamento teórico}
+ 
+\subsubsection*{Validación frente a verificación}
+ 
+La distinción es anterior a cualquier técnica y condiciona qué se puede concluir de una inspección.
+Verificar es comprobar que el documento está bien construido conforme a un estándar; validar es
+comprobar que especifica lo que las partes interesadas necesitan \cite{pohl2025}. Un ERS puede
+superar la verificación y fallar la validación: sus requisitos serían completos, consistentes y
+verificables, y describirían un sistema que la Clínica Veterinaria Macay no pidió.
+ 
+ISO/IEC/IEEE 29148:2018 sitúa la validación en su cláusula 6.4 y enumera las características
+exigibles a un requisito individual ---necesario, apropiado, no ambiguo, completo, singular,
+factible, verificable, correcto y conforme--- y al conjunto ---completo, consistente, factible,
+comprensible, capaz de ser validado \cite{iso29148}. Las métricas de la \S\ref{sec:metricas}
+operacionalizan una parte de esas características; las restantes no se midieron porque no admiten un
+conteo objetivo sin introducir juicio del auditor.
+ 
+\subsubsection*{Técnicas de validación aplicadas}
+ 
+Las técnicas de validación se ordenan por grado de formalidad: revisión informal, recorrido
+(\emph{walkthrough}), inspección formal, prototipado y listas de verificación \cite{pohl2025,
+swebok4}. El equipo de SGCV-IA validó el ERS mediante \emph{walkthrough} estructurado, ejecutado al
+cierre de cada iteración de Scrum junto con los criterios de aceptación de las historias de usuario
+correspondientes, en lugar de una inspección formal tipo Fagan. La razón es de encaje con el proceso:
+un ciclo de inspección formal completo ---con preparación individual y reunión de roles
+diferenciados--- introduce una cadencia incompatible con \emph{sprints} cortos, mientras que el
+\emph{walkthrough} al cierre de iteración permite corregir el catálogo de requisitos antes de que el
+error se propague a la siguiente entrega, con un costo de coordinación menor.
+ 
+\subsubsection*{Gestión de requisitos: línea base, trazabilidad y cambio}
+ 
+La gestión de la configuración del ERS descansa en la noción de línea base: una versión aprobada y
+congelada que sirve de referencia y a partir de la cual todo cambio se tramita \cite{swebok4}. Sin
+línea base no hay control de cambios posible, porque no existe el estado respecto del cual algo
+cambia. En SGCV-IA la línea base se materializa como etiquetas de versión sobre el repositorio
+Git del proyecto (\texttt{github.com/ramaguas-ship-it/SGCV-IA}), coherentes con las versiones
+sucesivas del documento (2.0, con MoSCoW aplicado; 3.0, con los requisitos no funcionales
+incorporados).
+ 
+La trazabilidad se distingue en \emph{pre-traceability} ---del requisito hacia su origen--- y
+\emph{post-traceability} ---del requisito hacia los artefactos que lo realizan--- \cite{gotel1994}.
+Ambas direcciones responden preguntas distintas: la primera, por qué existe un requisito; la segunda,
+qué hay que tocar si cambia. La matriz de la \S\ref{sec:gestion} las implementa como columnas hacia
+atrás ---hacia la evidencia de elicitación (\id{ENTR-01} a \id{ENTR-08}, encuesta)--- y hacia
+adelante ---hacia el modelado, el código y las pruebas--- de una misma cadena.
+ 
+El proceso de cambio sigue el modelo de control integrado de cambios del PMBOK como referencia de
+planificación \cite{pmbok7}, adaptado al ritmo de Scrum: la solicitud de cambio se analiza y prioriza
+en el refinamiento de \emph{backlog} antes de incorporarse a un \emph{sprint}. La literatura de
+trazabilidad advierte de que el análisis de impacto estimado sin recorrer la matriz es la causa más
+frecuente de subestimación del costo de un cambio \cite{clelandhuang2012}.
+ 
+\subsubsection*{Herramientas CASE y trazabilidad en entornos ágiles}
+ 
+Las herramientas CASE de gestión de requisitos se clasifican por su posición en el ciclo de vida
+---\emph{upper}, \emph{lower}, integradas--- y por el conjunto de funcionalidades esperables:
+repositorio, atributos tipados, trazabilidad multinivel, \emph{baselining}, control de cambios,
+colaboración e integración con el control de versiones \cite{wiegers2013}.
+ 
+En SGCV-IA la trazabilidad ágil se reconstruye por convención sobre el mensaje de \emph{commit} y la
+vinculación de ramas al identificador de requisito o historia \cite{clelandhuang2012}. El formato de
+historia de usuario \cite{cohn2004} cumple, dentro del flujo de trabajo diario del equipo, el papel
+que en la especificación documental cumple la ficha de requisito conforme a 29148. El proyecto
+mantiene ambas representaciones sincronizadas: el ERS como especificación formal de referencia y el
+\emph{backlog} de Scrum como su traducción operativa para el desarrollo.
+ 
+\subsubsection*{Ingeniería de requisitos para el componente de inteligencia artificial}
+ 
+Especificar un componente cuyo comportamiento se induce de datos plantea problemas que la ingeniería
+de requisitos clásica no aborda. El resultado es probabilístico, de modo que un criterio de
+aceptación binario no aplica y hay que sustituirlo por una métrica con umbral y conjunto de
+evaluación declarado. La calidad depende del conjunto de datos tanto como del modelo, lo que convierte
+las propiedades de los datos ---historiales clínicos, registros de consulta--- en requisitos. Y
+aparecen categorías de calidad nuevas ---explicabilidad frente al personal veterinario y ausencia de
+sesgo en las recomendaciones--- que ningún modelo de calidad tradicional contemplaba
+\cite{vogelsang2024, chazette2021}.
+ 
+A esos requisitos técnicos se suman los normativos: la LOPDP rige el tratamiento de los datos
+clínicos y personales que alimentan el modelo de IA de SGCV-IA y los derechos del titular sobre ellos
+\cite{lopdp2021}, mientras que el enfoque de clasificación por riesgo del Reglamento (UE) 2024/1689
+se usa solo como referencia de buena práctica para documentar el nivel de riesgo del componente de
+IA, sin que ello implique una obligación legal en el contexto ecuatoriano \cite{aiact2024}.
+ 
+\subsection{Proceso seguido a lo largo del proyecto}
+ 
+\begin{table}[H]
+\centering\footnotesize
+\caption{Proceso de ingeniería de requisitos seguido en SGCV-IA}
+\label{tab:proceso}
+\begin{tabular}{|C{2.6cm}|L{4.0cm}|L{4.6cm}|L{4.6cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{Fase} & \textbf{Actividad} & \textbf{Técnicas empleadas} & \textbf{Artefacto producido}\\ \hline
+Elicitación & Levantamiento de necesidades con la Clínica Veterinaria Macay & Entrevista semiestructurada, encuesta al personal operativo & Entrevistas \id{ENTR-01} a \id{ENTR-08} (ampliadas desde \id{ENTR-09} en la 2B) y encuesta $n=30$, en \texttt{02\_Evidencias/}\\ \hline
+Especificación y modelado & Formalización del catálogo de requisitos & Fichas de requisito conforme a 29148, priorización MoSCoW & ERS v2.0 (RF/RNF/RST con MoSCoW) y v3.0 (RNF incorporados)\\ \hline
+Validación & Revisión del ERS al cierre de cada iteración & \emph{Walkthrough} estructurado integrado a la revisión de \emph{sprint} & Catálogo de requisitos corregido por iteración\\ \hline
+Gestión y trazabilidad & Control de versiones y seguimiento de cambios & Línea base sobre etiquetas de Git, \emph{backlog} de Scrum & Historial de versiones del ERS en el repositorio y matriz de trazabilidad (\S\ref{sec:gestion})\\ \hline
+Componente de IA & Especificación de requisitos del módulo de inteligencia artificial & Aplicación de LOPDP y del enfoque de riesgo del Reglamento (UE) 2024/1689 como referencia & \S\ref{sec:ia} del ERS\\ \hline
+\end{tabular}
+\end{table}
+ 
+\subsection{Proceso de elicitación seguido}
+ 
+La elicitación combinó entrevista semiestructurada con el personal de la Clínica Veterinaria Macay
+---ocho entrevistas, codificadas \id{ENTR-01} a \id{ENTR-08} en la versión actual del ERS--- y una
+encuesta con $n=30$ aplicada al personal operativo. Para la Entrega 2B el conjunto de entrevistas se
+amplía por encima de las ocho ya codificadas, con nuevos identificadores consecutivos a partir de
+\id{ENTR-09}, con el fin de cubrir perfiles de la clínica que la primera ronda no alcanzó. La razón de
+usar ambos instrumentos y no solo entrevistas es la misma que
+justifica la técnica en la literatura: los roles administrativos y clínicos describen el proceso
+desde ángulos distintos, y la encuesta permite contrastar a mayor escala lo que las entrevistas
+levantan en profundidad. Toda la evidencia de elicitación se conserva anonimizada, con identificador
+de analista (\emph{Equipo AHMRV}) y organizada en la carpeta \texttt{02\_Evidencias/} del
+repositorio, siguiendo el mismo esquema de codificación con el que se referencia en la matriz de
+trazabilidad de la \S\ref{sec:gestion}.
+ 
+Sobre esa base se derivaron los requisitos funcionales (RF), no funcionales (RNF) y restricciones
+(RST) del sistema, priorizados con MoSCoW. La versión 2.0 del ERS formalizó el catálogo de requisitos
+y aplicó la priorización MoSCoW sobre él; la versión 3.0 incorporó los requisitos no funcionales,
+completando el conjunto que la \S\ref{sec:gestion} traza de extremo a extremo.
+ 
+\subsection{Decisiones metodológicas y su justificación}
+ 
+Tres decisiones condicionaron el resultado y merecen justificarse, porque en cada una había una
+alternativa razonable que se descartó.
+ 
+\subsubsection*{Elicitación con instrumentos mixtos y no solo con entrevistas}
+ 
+Basar la elicitación solo en entrevistas habría dejado sin contraste cuantitativo lo que el personal
+administrativo de la clínica describe como proceso formal frente a lo que el personal operativo
+efectivamente hace en la atención diaria. El cuestionario con $n=30$ cumple ese papel de contraste;
+las ocho entrevistas semiestructuradas aportan la profundidad que una encuesta cerrada no permite.
+Ambos instrumentos se conservan como evidencia trazable e independiente en \texttt{02\_Evidencias/}.
+ 
+\subsubsection*{Priorización con MoSCoW}
+ 
+El catálogo de RF, RNF y RST se priorizó con MoSCoW sobre el conjunto formalizado en la versión 2.0
+del ERS. La priorización se mantuvo como criterio único de ordenamiento por alcance del proyecto
+integrador: el catálogo resultante es lo bastante acotado para que las categorías \emph{Must},
+\emph{Should}, \emph{Could} y \emph{Won't} ordenen por sí solas la secuencia de implementación sin
+necesidad de una técnica de puntuación adicional.
+ 
+\subsubsection*{Walkthrough estructurado y no inspección formal}
+ 
+El equipo validó el ERS mediante \emph{walkthrough} al cierre de cada iteración de Scrum, en lugar de
+una inspección formal tipo Fagan con roles diferenciados y preparación individual obligatoria
+\cite{fagan1976}. La alternativa formal es más rigurosa pero exige una cadencia de reunión y una
+preparación previa incompatibles con \emph{sprints} cortos y un equipo reducido; el
+\emph{walkthrough} integrado a la revisión de \emph{sprint} permite corregir el catálogo de
+requisitos con una frecuencia mayor, al costo de una detección de defectos menos sistemática que la
+que ofrecería una inspección formal.
+ 
+\subsubsection*{LOPDP como normativa obligatoria y el Reglamento europeo de IA como referencia}
+ 
+SGCV-IA trata datos personales de los propietarios y datos clínicos de las mascotas, lo que activa de
+forma directa la LOPDP ecuatoriana \cite{lopdp2021}. El Reglamento (UE) 2024/1689 no rige en Ecuador;
+se decidió, no obstante, mantenerlo como marco de referencia comparativa para documentar el nivel de
+riesgo del componente de IA y sus obligaciones de transparencia frente al personal clínico, dejando
+explícito en cada referencia que su cumplimiento no es exigible en este contexto sino que se adopta
+como buena práctica \cite{aiact2024}.
