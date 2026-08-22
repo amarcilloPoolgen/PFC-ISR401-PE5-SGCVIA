@@ -3,7 +3,7 @@
 Práctica Experimental Unidad V (PE5) — Ingeniería de Requisitos (ISR-401), UTEQ, 2026-2027 PPA.
 Integración, métricas y defensa del Proyecto Integrador: **Sistema de Gestión para Clínicas Veterinarias con Inteligencia Artificial (SGCV-IA)**.
 
-**Repositorio:** https://github.com/<usuario>/PFC-ISR401-PE5-SGCVIA
+**Repositorio:** [https://github.com/<usuario>/PFC-ISR401-PE5-SGCVIA](https://github.com/amarcilloPoolgen/PFC-ISR401-PE5-SGCVIA)
 
 ## Equipo
 
