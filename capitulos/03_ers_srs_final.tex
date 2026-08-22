@@ -1,158 +1,2177 @@
 % =====================================================================
-\section{Especificación de requisitos final}
-\label{sec:ers}
+% capitulos/03_ers_srs_final.tex
+% Proyecto: SGCV-IA -- Sistema de Gestión para Clínicas Veterinarias con IA
+% Responsable: Vera Gomez Anthony Alfredo
+% Criterios cubiertos: C4 (ERS/SRS final integrado) y parte de C7
+%                       (Marco Teórico con citación IEEE)
+%
+% Versión:  4.0 (Final)
+% Fecha:    % TODO: fecha real de cierre de PE5
+% Commit:   % TODO: hash corto del commit final (git log -1 --format=%h)
+% Estándar: IEEE/ISO/IEC 29148:2018
+%
+% Este archivo se integra en main.tex mediante \input{capitulos/03_ers_srs_final}
+% Requiere que main.tex tenga \bibliographystyle{ieeetr} y
+% \bibliography{referencias/referencias} para que los \cite{} se resuelvan.
+% =====================================================================
 
-\subsection{Catálogo final de requisitos}
+\subsubsection{Marco Teórico}\label{marco-tuxe9orico}
 
-\begin{table}[H]
-\centering\footnotesize
-\caption{Composición del catálogo de requisitos del ERS de SGCV-IA (v3.0)}
-\label{tab:catalogo}
-\begin{tabular}{|L{5.6cm}|C{2.0cm}|C{2.4cm}|L{4.4cm}|}
-\hline
-\rowcolor{grisclaro}\textbf{Tipo} & \textbf{Cantidad} & \textbf{Rango} & \textbf{Observación}\\ \hline
-Requisitos funcionales & 25 & \id{RF-01}--\id{RF-24}, \id{RF-26} & 19 \emph{Must}, 6 \emph{Should}; \id{RF-25} reservado y reasignado por el CCB\\ \hline
-Requisitos no funcionales & 18 & \id{RNF-01}--\id{RNF-18} & Mapeados a características de ISO/IEC 25010; supera el mínimo de 15 exigido por la rúbrica\\ \hline
-Requisitos legales & 14 & \id{RL-01}--\id{RL-14} & Derivados de la LOPDP, trazados hacia RF/RNF\\ \hline
-Restricciones de diseño & 9 & \id{RST-01}--\id{RST-09} & Presupuestaria, tecnológica, técnica/hardware, arquitectónica, ética/regulatoria y de seguridad\\ \hline
-\textbf{Total formalizado} & \textbf{66} & --- & A partir de 24 requisitos crudos (\id{RC-01}--\id{RC-24}) elicitados en la Unidad II\\ \hline
-\end{tabular}
-\end{table}
+\begin{quote}
+La elaboración de la Especificación de Requisitos de Software (ERS)
+del sistema SGCV-IA se fundamenta en el conjunto de estándares,
+metodologías y literatura especializada que se describen a
+continuación, y que sustentan cada una de las decisiones técnicas
+adoptadas por el equipo.
 
-\noindent
-El catálogo de 25 RF se formalizó a partir de veinticuatro requisitos crudos elicitados
-(\id{RC-01} a \id{RC-24}), más dos requisitos legales derivados directamente de la LOPDP
-(\id{RL-01} y el bloque \id{RL-04}/\id{RL-05}/\id{RL-06}/\id{RL-07}, Criterio C4). Uno de los
-crudos, \id{RC-22} (``Bajo costo de implementación y operación''), se reclasificó como
-restricción de diseño (\id{RST-01}) por tratarse de un criterio de negocio y no de una función
-observable del sistema, lo que explica por qué el rango funcional salta de \id{RF-24} a
-\id{RF-26}: \id{RF-25} fue aprobado por el Change Control Board en una práctica anterior para un
-requisito de contenido distinto (asistencia a citas) y el identificador original quedó reservado
-para evitar colisión.
+\textbf{Ingeniería de requisitos.} El proceso de elicitación,
+análisis, especificación y validación seguido en este proyecto se
+apoya en el ciclo de vida de requisitos descrito por Pohl \cite{pohl2010},
+así como en el enfoque metodológico general de la ingeniería de
+software propuesto por Sommerville \cite{sommerville2016}. La estructura del
+propio documento, la nomenclatura de los requisitos (RF, RNF, RC) y
+los criterios de completitud, verificabilidad y trazabilidad exigidos
+adoptan como referencia normativa el estándar IEEE/ISO/IEC
+29148:2018 \cite{ieee291482018}, citado explícitamente en la carátula y en la
+Tabla 3 de este documento.
 
-\subsection{Requisitos clave y por qué lo son}
+\textbf{Calidad del producto de software.} La definición de los
+requisitos no funcionales del sistema (rendimiento, seguridad,
+usabilidad, disponibilidad) se alinea con el modelo de características
+de calidad SQuaRE de la norma ISO/IEC 25010:2023 \cite{iso250102023}, y con
+las prácticas de aseguramiento de calidad descritas en la Guía
+SWEBOK v4.0 \cite{swebok2024}, que también orienta la organización de los
+procesos de gestión del proyecto documentados en el Apéndice A.
 
-De los veinticinco requisitos funcionales, cinco concentran la propuesta de valor del sistema y
-son los que conviene poder defender uno por uno.
+\textbf{Informática biomédica y sistemas de información clínica.} El
+diseño conceptual del módulo de historia clínica electrónica, el
+manejo de datos de pacientes (mascotas) y la interoperabilidad con
+otras clínicas se fundamentan en los principios de la informática
+biomédica descritos por Shortliffe y Cimino \cite{shortliffe2014}, así como en
+los marcos de gestión estratégica de información hospitalaria de
+Haux et al. \cite{haux2018}, adaptados en este proyecto al contexto de la
+clínica veterinaria.
 
-\begin{table}[H]
-\centering\footnotesize
-\caption{Requisitos clave de SGCV-IA y su justificación en la evidencia}
-\label{tab:req-clave}
-\begin{tabular}{|C{1.4cm}|L{4.2cm}|L{4.4cm}|L{4.4cm}|}
-\hline
-\rowcolor{grisclaro}\textbf{ID} & \textbf{Requisito} & \textbf{Evidencia que lo sustenta} & \textbf{Por qué es clave}\\ \hline
-\id{RF-04} & Registro detallado del historial clínico & \id{EV-01}, \id{EV-02}: entrevistas al Dr. Antonio y a Amagua & Es la base de la que dependen el diagnóstico asistido, el seguimiento nutricional y la trazabilidad de auditoría\\ \hline
-\id{RF-17} & Sugerencias diagnósticas asistidas por IA & \id{EV-01}, \id{EV-02} & Es la funcionalidad distintiva del sistema frente a un gestor clínico convencional, y la que activa la mayor parte del marco normativo (\id{RL-09}, \id{RL-10}, \id{RST-05}, \id{RST-08})\\ \hline
-\id{RF-21} & Operación con baja dependencia de conectividad permanente & \id{EV-01} & Sin sincronización diferida, el sistema queda inoperable en las condiciones reales de conectividad de la clínica\\ \hline
-\id{RF-24} & Gestión de consentimiento informado (LOPDP) & \id{EV-04}: consentimiento informado firmado & Es la puerta de entrada legal para tratar cualquier dato del propietario o de la mascota; sin él, ningún otro RF es lícito\\ \hline
-\id{RF-26} & Portal de ejercicio de derechos (acceso, rectificación, eliminación) & \id{EV-04} & Concentra la implementación de cuatro requisitos legales (\id{RL-04} a \id{RL-07}) en un único punto de contacto para el titular\\ \hline
-\end{tabular}
-\end{table}
+\textbf{Inteligencia artificial aplicada a la salud.} Los requisitos
+de IA del sistema (RF-17, RF-18 y RF-19), orientados a la asistencia
+diagnóstica y a la explicabilidad de las sugerencias del modelo,
+retoman la discusión de Topol \cite{topol2019} sobre el rol de la IA como
+apoyo --- y nunca como reemplazo --- del criterio clínico profesional.
+Por esta razón, la validación obligatoria del veterinario sobre toda
+sugerencia generada por IA se especifica como requisito de prioridad
+\emph{Must}, y no como una característica opcional del sistema.
+\end{quote}
 
-\subsection{Priorización MoSCoW del catálogo}
+\section{Requisitos Específicos}\label{requisitos-especuxedficos}
 
-\begin{table}[H]
-\centering\footnotesize
-\caption{Priorización de requisitos mediante MoSCoW}
-\label{tab:moscow}
-\begin{tabular}{|L{2.0cm}|L{6.0cm}|L{4.2cm}|L{2.2cm}|}
-\hline
-\rowcolor{grisclaro}\textbf{Prioridad} & \textbf{RF} & \textbf{RNF} & \textbf{\%}\\ \hline
-Must have & \id{RF-01} a \id{RF-17}, \id{RF-24}, \id{RF-26} (19 RF) & \id{RNF-01}, \id{RNF-02}, \id{RNF-04}, \id{RNF-05}, \id{RNF-09}, \id{RNF-16} (6 RNF) & 71\,\%\\ \hline
-Should have & \id{RF-18} a \id{RF-23} (6 RF) & \id{RNF-03}, \id{RNF-06}, \id{RNF-07} (3 RNF) & 25\,\%\\ \hline
-Could have & Ninguno & \id{RNF-08}, \id{RNF-10} (2 RNF) & 4\,\%\\ \hline
-Won't have & --- & --- & 0\,\%\\ \hline
-\end{tabular}
-\end{table}
+\subsubsection{Interfaces externas}\label{interfaces-externas}
 
-\noindent
-Los diecinueve \emph{Must} son las funciones sin las cuales el sistema no reemplaza el proceso
-manual actual de la clínica: registro de pacientes, historial clínico, atención médica con
-diagnóstico asistido por IA, control de inventario, gestión de empleados, facturación y
-comunicación. Los seis \emph{Should} aportan valor significativo ---reportes comparativos,
-seguimiento nutricional detallado, recordatorios automáticos, trazabilidad de auditoría--- pero el
-sistema es funcional sin ellos en una primera versión. Ningún RF quedó en \emph{Could have}; a
-nivel de RNF, la portabilidad extendida a más plataformas móviles (\id{RNF-08}) y la resiliencia
-total ante una caída prolongada del proveedor externo de IA (\id{RNF-10}) son mejoras deseables que
-no bloquean la operación básica y se abordan en una segunda iteración. No se identificaron
-requisitos a excluir explícitamente del alcance funcional ya definido, porque las exclusiones de
-alcance ---diagnósticos definitivos sin validación humana, prescripción automatizada, integración
-con sistemas gubernamentales de salud animal, facturación electrónica certificada ante el SRI,
-\emph{e-commerce}--- ya se filtraron en la fase de planificación (Entrega 1A) y nunca entraron como
-candidatos a RC o RF.
+\paragraph{Interfaz de usuario}\label{interfaz-de-usuario}
 
-\subsection{Requisitos no funcionales por característica de calidad}
+\begin{quote}
+A continuación se describen las pantallas principales de la interfaz de
+usuario de SGCV-IA, identificadas a partir de las funciones del producto
+definidas en la Sección 2.2 y de los hallazgos de las entrevistas de
+elicitación (Apéndice B). Cada pantalla se vincula con la función o
+módulo que soporta; la referencia a los requisitos funcionales formales
+(RF-XX) se completará en la Sección 3.2 una vez consolidada su
+numeración definitiva.
+\end{quote}
 
-Los dieciocho requisitos no funcionales se organizan según las características de calidad de
-producto de ISO/IEC 25010 \cite{iso25010}. Cubren desempeño (tiempo de respuesta,
-comportamiento temporal, utilización de recursos), fiabilidad (madurez, disponibilidad,
-recuperabilidad), seguridad (control de acceso, trazabilidad y no repudio, cifrado de datos),
-usabilidad (capacidad de aprendizaje, satisfacción del usuario), compatibilidad, mantenibilidad
-(modularidad, capacidad de prueba) y dos características añadidas por el propio dominio del
-proyecto: explicabilidad de la IA (\id{RNF-16}) y privacidad, esta última desdoblada en
-conservación de datos (\id{RNF-17}) y respuesta a incidentes (\id{RNF-18}), ambas trazadas
-directamente a artículos de la LOPDP. \id{RNF-16} es el requisito que cierra el piso de
-explicabilidad exigido por el componente de IA: ninguna sugerencia diagnóstica puede presentarse
-sin su referencia bibliográfica y su nivel de confianza asociado.
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2458}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5532}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1843}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Pantalla}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Descripción}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Función relacionada (Sec. 2.2)}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Login / Selección de rol} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Autenticación con usuario y contraseña; redirección al panel
+correspondiente según el rol asignado (RBAC): Médico Veterinario o Personal Administrativo.
+\end{minipage} & F9 \\
+\textbf{Dashboard general} & \begin{minipage}[t]{\linewidth}\raggedright
+Resumen del día: citas próximas, alertas de inventario por vencer o agotarse, pacientes con seguimiento pendiente y accesos rápidos
+según el rol del usuario.
+\end{minipage} & F1, F2, F5 \\
+\textbf{Gestión de Historiales Clínicos} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Listado de pacientes con búsqueda por nombre del animal o del dueño;
+ficha de detalle con datos generales, historial de consultas, diagnósticos y tratamientos previos.
+\end{minipage} & F1 \\
+\textbf{Registro de Consulta} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Formulario de nueva consulta (motivo, síntomas, diagnóstico, tratamiento, dosis y frecuencia), con acceso directo al
+panel de sugerencias de IA durante el registro.
+\end{minipage} & F1, F3 \\
+\textbf{Panel de Diagnóstico Asistido por IA} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Vista de los diagnósticos diferenciales sugeridos por el módulo de IA
+junto con su respaldo bibliográfico; el veterinario puede aceptar,
+modificar o rechazar cada sugerencia antes de registrarla.
+\end{minipage} & F3 \\
+\textbf{Seguimiento Nutricional} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Registro cronológico de peso y condición corporal del paciente, con gráfico de tendencia y recomendaciones de alimentación
+generadas según raza, edad y peso.
+\end{minipage} & F4 \\
+\textbf{Gestión de Citas y Recordatorios} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Calendario de citas programadas por paciente, registro de
+asistencia/inasistencia y configuración de recordatorios automáticos enviados al dueño.
+\end{minipage} & F5 \\
+\textbf{Comunicación con Dueños} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Historial de comunicaciones (llamadas, WhatsApp) por paciente, con opción de adjuntar y enviar resultados de exámenes
+directamente desde la plataforma.
+\end{minipage} & F6 \\
+\textbf{Facturación y Cobro} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Formulario de cobro post-consulta en un máximo de tres pasos: selección
+de servicios y productos utilizados, cálculo del monto total y emisión
+del comprobante.
+\end{minipage} & F7 \\
+\textbf{Inventario de Bodega} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Listado de insumos y medicamentos con stock actual y fecha de
+vencimiento; formulario de entradas/salidas y panel de alertas de vencimiento próximo o stock mínimo.
+\end{minipage} & F2 \\
+\textbf{Reportes y Exportación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Generación de reportes del historial clínico y de indicadores operativos
+(consultas, facturación, inventario), exportables en formato PDF para referencias a otras clínicas.
+\end{minipage} & F8 \\
+\end{longtable}
+}
 
-\subsection{Requisitos legales y su trazabilidad hacia RF/RNF}
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2458}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5532}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1843}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Gestión de Usuarios y Accesos}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Alta y edición de cuentas de personal, asignación de rol (Médico Veterinario / Personal Administrativo) y permisos de acceso a
+cada módulo.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+F9
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
 
-\begin{table}[H]
-\centering\footnotesize
-\caption{Selección de requisitos legales derivados de la LOPDP y su implementación}
-\label{tab:rl}
-\begin{tabular}{|C{1.4cm}|C{1.6cm}|L{5.6cm}|L{4.2cm}|}
-\hline
-\rowcolor{grisclaro}\textbf{ID} & \textbf{Artículo} & \textbf{Obligación} & \textbf{Requisito que la implementa}\\ \hline
-\id{RL-01} & Art. 7, 8 & Captura de consentimiento informado del propietario & \id{RF-24}\\ \hline
-\id{RL-04} & Art. 12 & Informar al titular sobre las finalidades del tratamiento & \id{RF-26}\\ \hline
-\id{RL-05} & Art. 13 & Derecho de acceso, atendible en 15 días & \id{RF-26}\\ \hline
-\id{RL-06} & Art. 14 & Derecho de rectificación & \id{RF-26}\\ \hline
-\id{RL-07} & Art. 15 & Derecho de eliminación, atendible en 15 días & \id{RF-26}\\ \hline
-\id{RL-09} & Art. 20 & Ninguna sugerencia de IA se aplica sin revisión del veterinario & \id{RF-17}, \id{RF-18}, \id{RF-19}\\ \hline
-\id{RL-10} & Art. 25, 26, 30, 31 & Datos de salud como categoría especial bajo secreto profesional & \id{RF-17}, \id{RNF-09}, \id{RNF-12}\\ \hline
-\id{RL-13} & Art. 43, 46 & Notificación de incidentes a la Autoridad ($\leq$5 días) y al titular ($\leq$3 días) & \id{RNF-18}, \id{RF-23}\\ \hline
-\end{tabular}
-\end{table}
+\protect\phantomsection\label{_bookmark24}{}\emph{\textbf{Tabla 7.
+Interfaz de usuario}}
 
-\noindent
-Se listan ocho de los catorce requisitos legales, los que condicionan directamente un requisito
-funcional o no funcional concreto; el catálogo completo (\id{RL-01} a \id{RL-14}) reside en la
-Sección 3.4 del ERS. Los cuatro derechos del titular ---acceso, rectificación, eliminación y
-portabilidad--- se concentran en un único requisito funcional (\id{RF-26}, portal de ejercicio de
-derechos) en lugar de dispersarse en pantallas independientes, decisión que simplifica tanto la
-implementación como la auditoría de cumplimiento.
+\begin{quote}
+Los mockups de alta fidelidad correspondientes a cada pantalla fueron
+desarrollados en Figma y se presentan a continuación como capturas del
+prototipo; los archivos editables se incluyen en la carpeta
+modelos/mockups/ del repositorio GitHub del proyecto, conforme a lo
+establecido en la guía de entrega.
+\end{quote}
 
-\subsection{Restricciones de diseño}
+\subparagraph{Mockups de interfaz (capturas del
+prototipo)}\label{mockups-de-interfaz-capturas-del-prototipo}
 
-Se identificaron nueve restricciones de diseño (\id{RST-01} a \id{RST-09}), agrupadas en cinco
-tipos: presupuestaria, tecnológica, técnica/hardware, arquitectónica y ética/regulatoria-seguridad.
-Ninguna proviene de una preferencia técnica del equipo: todas se derivan del alcance definido en la
-Entrega 1A o de un requisito funcional o no funcional ya formalizado.
+\begin{quote}
+A continuación se presentan las capturas del prototipo de alta fidelidad
+correspondientes a cada pantalla descrita en la Tabla de la sección
+3.1.1, desarrolladas como parte del diseño de interfaz del sistema
+SGCV-IA.
+\end{quote}
 
-\begin{table}[H]
-\centering\footnotesize
-\caption{Restricciones de diseño de SGCV-IA (selección)}
-\label{tab:rst}
-\begin{tabular}{|C{1.4cm}|L{6.8cm}|L{2.4cm}|L{2.4cm}|}
-\hline
-\rowcolor{grisclaro}\textbf{ID} & \textbf{Restricción} & \textbf{Tipo / Origen} & \textbf{Relacionado}\\ \hline
-\id{RST-01} & Modelo de costos accesible para clínicas de 1 a 3 veterinarios; se prioriza software de bajo costo o código abierto & Presupuestaria & \id{RC-22}\\ \hline
-\id{RST-03} & Sincronización offline mediante cola local de operaciones pendientes, sin réplica completa de la base de datos en el cliente & Técnica / Hardware & \id{RF-21}\\ \hline
-\id{RST-04} & El módulo de IA se implementa desacoplado del backend transaccional, de modo que su indisponibilidad no afecte al resto del sistema & Arquitectónica & \id{RF-17}, \id{RF-18}, \id{RF-19}\\ \hline
-\id{RST-05} & Toda sugerencia de IA queda sujeta a revisión y aprobación explícita del veterinario antes de incorporarse al historial & Ética / Regulatoria & \id{RF-17}\\ \hline
-\id{RST-08} & El sistema no emite diagnósticos definitivos ni prescripciones automatizadas; toda salida de IA es sugerencia & Regulatoria / Alcance & \id{RF-17}, \id{RF-19}\\ \hline
-\end{tabular}
-\end{table}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-001_Login.png}
+\end{center}
 
-\subsection{Matriz de trazabilidad}
+\protect\phantomsection\label{_bookmark25}{}Ilustración 2. Login / Selección de rol
 
-La matriz de trazabilidad de la \S\ref{sec:gestion} conecta evidencia de campo, requisito y caso de
-uso. Las evidencias \id{EV-01} a \id{EV-04} corresponden al registro del Apéndice B: \id{EV-01} es
-la entrevista al Dr. Antonio (24/05/2026); \id{EV-02}, la entrevista a Amagua (25/05/2026);
-\id{EV-03}, el acta de reunión firmada; \id{EV-04}, el consentimiento informado firmado. Cuando un
-requisito no corresponde a uno de los diez casos de uso detallados, se referencia el caso de uso
-equivalente del diagrama general. La numeración de esta cadena de trazabilidad se mantiene
-coherente con la reclasificación de \id{RC-22} señalada en la \S\ref{sec:ers}: al no ocupar fila de
-RF, la tabla no presenta un salto sin explicación entre \id{RF-24} y \id{RF-26}.
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-002_Dashboard.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark26}{}Ilustración 3. Dashboard general
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-003_Gestion_Pacientes.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark27}{}Ilustración 4. Gestión de Pacientes
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-004_Dashboard_Graficos.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark28}{}Ilustración 5. Dashboard con Gráficos
+\end{quote}
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-006_Paciente_Nuevo.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark29}{}Ilustración 6. Registro de Nuevo Paciente
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-007_Paciente_DatosPropietario.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark30}{}Ilustración 7. Datos del Propietario
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-008_Historial_Paciente.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark31}{}Ilustración 8. Historial del Paciente
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-009_Consulta_DatosGenerales.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark32}{}Ilustración 9. Consulta de Datos Generales
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-010_Consulta_Medicamentos.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark33}{}Ilustración 10. Consulta de Medicamentos
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-011_Historial_LineaTiempo.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark34}{}Ilustración 11. Historial en Línea de Tiempo
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-012_Agenda_Citas.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark35}{}Ilustración 12. Agenda de Citas
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-013_Citas_NuevaCita.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark36}{}Ilustración 13. Registro de Nueva Cita
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-014_Citas_RecordatorioWhatsapp.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark37}{}Ilustración 14. Recordatorio de Cita por WhatsApp
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-015_Inventario_Listado.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark38}{}Ilustración 15. Listado de Inventario
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-016_Inventario_AgregarProducto.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark39}{}Ilustración 16. Agregar Producto al Inventario
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-017_Facturacion_PasoUno.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark40}{}Ilustración 17. Facturación - Paso Uno
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-018_Facturacion_SeleccionarPaciente.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark41}{}Ilustración 18. Facturación - Selección de Paciente
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-019_Facturacion_ServiciosSeleccionados.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark42}{}Ilustración 19. Facturación - Servicios Seleccionados
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-020_Pacientes_Gestion.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark43}{}Ilustración 20. Gestión de Pacientes
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-021_Facturacion_Medicamentos.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark44}{}Ilustración 21. Facturación - Medicamentos
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-022_Facturacion_ResumenFactura.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark45}{}Ilustración 22. Facturación - Resumen de Factura
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-023_Facturacion_FacturaEmitida.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark46}{}Ilustración 23. Factura Emitida
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-024_IADiagnostica_FormularioVacio.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark47}{}Ilustración 24. Diagnóstico Asistido por IA - Formulario
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-025_IADiagnostica_Resultados.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark48}{}Ilustración 25. Diagnóstico Asistido por IA - Resultados
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-026_Reportes_Principal.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark49}{}Ilustración 26. Módulo Principal de Reportes
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-027_Configuracion_Usuarios.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark50}{}Ilustración 27. Configuración de Usuarios
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-028_Configuracion_RolesPermisos.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark51}{}Ilustración 28. Configuración de Roles y Permisos
+
+\begin{quote}
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-029_Configuracion_PerfilVeterinario.png}
+\end{center}
+\end{quote}
+
+\protect\phantomsection\label{_bookmark52}{}Ilustración 29. Configuración del Perfil del Veterinario
+
+\begin{center}
+\includegraphics[width=\linewidth,keepaspectratio]{./media/MU-030_Configuracion_PerfilAdministrativo.png}
+\end{center}
+
+\protect\phantomsection\label{_bookmark53}{}Ilustración 30. Configuración del Perfil Administrativo
+
+\protect\phantomsection\label{_bookmark35}{}
+
+\subparagraph{Prototipo interactivo en
+Figma}\label{prototipo-interactivo-en-figma}
+
+\begin{quote}
+El prototipo navegable de alta fidelidad, con todas las pantallas
+listadas anteriormente, puede consultarse en el siguiente enlace de
+Figma:
+
+\url{https://www.figma.com/make/gYiCFRRe7MInCu8yvNY2Bh/Veterinary-Clinic-Management-App}
+\end{quote}
+
+\paragraph{Interfaz de hardware}\label{interfaz-de-hardware}
+
+\begin{quote}
+SGCV-IA es un sistema de gestión clínica veterinaria desarrollado como
+aplicación de escritorio (Windows Forms / C\#); por ello, su interfaz de
+hardware se limita a los dispositivos físicos sobre los cuales se
+ejecuta y con los que interactúa el personal de la clínica durante la
+consulta, la facturación y la gestión de inventario. La referencia a las
+funciones del producto (Sec. 2.2) se mantiene a modo orientativo, en
+espera de su vinculación definitiva con los requisitos funcionales
+formales (RF-XX) en la Sección 3.2.
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2458}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5532}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1843}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Componente}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Descripción}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Función relacionada (Sec.} \textbf{2.2)}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Equipos de cómputo cliente} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Computadoras de escritorio o portátiles con sistema operativo Windows 10
+o superior, ubicadas en recepción, consultorio y administración.
+Resolución mínima de pantalla de 1366x768 píxeles, mínimo 4 GB de RAM y
+conexión a la red local (LAN) de la clínica.
+\end{minipage} & F1--F9 \\
+\textbf{Periféricos de entrada} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Teclado y mouse estándar para el ingreso de datos en los formularios de
+historiales clínicos, consultas, facturación e inventario. No se
+requiere hardware especializado adicional en el alcance actual del sistema.
+\end{minipage} & F1, F3, F7 \\
+\textbf{Periféricos de salida} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Impresora local o de red (matricial o láser) conectada al equipo de
+recepción/administración, utilizada para la emisión de comprobantes de
+cobro y la impresión de reportes exportados en formato PDF.
+\end{minipage} & F7, F8 \\
+\textbf{Almacenamiento y conectividad} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Conexión permanente, mediante red local cableada o inalámbrica, al
+servidor donde reside la base de datos del sistema. No se contempla
+almacenamiento local independiente en los equipos cliente más allá de la
+caché temporal propia de la aplicación.
+\end{minipage} & F1--F9 \\
+\end{longtable}
+}
+
+\protect\phantomsection\label{table8}{}\emph{\textbf{Tabla 8.
+Interfaz de hardware}}
+
+\begin{quote}
+El sistema no requiere hardware especializado adicional (lectores
+biométricos, sensores u otros dispositivos IoT) en su alcance actual;
+cualquier ampliación futura del hardware de soporte se documentará en
+versiones posteriores del ERS.
+\end{quote}
+
+\paragraph{Interfaz de software}\label{interfaz-de-software}
+
+\begin{quote}
+A continuación, se describen los componentes de software, formatos de
+intercambio e integraciones con los que interactúa SGCV-IA como
+aplicación de escritorio (Windows Forms / C\#). La referencia a las
+funciones del producto (Sec. 2.2) se mantiene a modo orientativo, en
+espera de su vinculación definitiva con los requisitos funcionales
+formales (RF-XX) en la Sección 3.2.
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2458}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5532}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1843}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Componente}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Descripción}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Función relacionada (Sec. 2.2)}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Sistema operativo y plataforma} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Aplicación de escritorio desarrollada en C\# sobre el framework .NET (Windows Forms), compatible con Windows 10 o superior. No requiere
+instalación de máquina virtual ni dependencias de plataformas externas
+para su ejecución en el cliente.
+\end{minipage} & F1--F9 \\
+\textbf{Base de datos} & \begin{minipage}[t]{\linewidth}\raggedright
+Motor de base de datos relacional (SQL Server o equivalente) alojado en
+el servidor de la clínica, accedido mediante ADO.NET o un ORM (p. ej.
+Entity Framework) a través de la red local. Almacena historiales
+clínicos, citas, inventario, facturación y usuarios.
+\end{minipage} & F1, F2, F5, F7, F9 \\
+\textbf{Formato de intercambio de datos} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Generación de reportes exportables en formato PDF (historial clínico,
+indicadores operativos) mediante una biblioteca de generación de
+documentos integrada en la aplicación. Intercambio interno de datos en formato estructurado (objetos .NET / DataSet) entre los módulos del sistema.
+\end{minipage} & F8 \\
+\textbf{Módulo de IA} & \begin{minipage}[t]{\linewidth}\raggedright
+Comunicación con el módulo de diagnóstico asistido mediante una API
+interna (REST/HTTP) que recibe los datos de la consulta (síntomas,
+motivo) y devuelve los diagnósticos diferenciales sugeridos junto con su
+respaldo bibliográfico.
+\end{minipage} & F3 \\
+\textbf{Comunicación con terceros} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Integración con servicios externos de mensajería (p. ej. WhatsApp
+Business API) y/o correo electrónico para el envío de
+\end{minipage} & F5, F6 \\
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2458}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5532}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1843}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+recordatorios de citas y resultados de exámenes a los dueños de las
+mascotas.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\end{longtable}
+}
+
+\subparagraph{Tabla 9. Interfaz de
+software}\label{tabla-9.-interfaz-de-software}
+
+\begin{quote}
+El módulo de IA y las integraciones de comunicación con terceros se
+diseñarán como componentes desacoplados del núcleo transaccional del
+sistema, de forma que su eventual indisponibilidad no comprometa el
+funcionamiento de los módulos clínicos y administrativos principales.
+\end{quote}
+
+\paragraph{Interfaces de
+comunicación}\label{interfaces-de-comunicaciuxf3n}
+
+\begin{quote}
+\emph{Sección pendiente de elaboración.}
+\end{quote}
+
+\subsubsection{Requisitos Funcionales}\label{requisitos-funcionales}
+
+\begin{quote}
+A continuación, se formalizan los requisitos funcionales (RF) de
+SGCV-IA, derivados de los requisitos crudos (RC) identificados durante
+la elicitación (Sección III del documento de Entrega 1A) y organizados
+por área funcional. Cada RF se documenta mediante la plantilla de ocho
+atributos establecida en la guía de entrega. El requisito de negocio
+RC-22 ("Bajo costo de implementación y operación") no se formaliza como
+RF, ya que corresponde a un criterio de adopción y se incorpora como
+restricción en la Sección 3.4.
+\end{quote}
+
+\subsubsection{Área 1: Gestión
+Operativa}\label{uxe1rea-1-gestiuxf3n-operativa}
+
+\paragraph{RF-01 --- Acceso multiplataforma (móvil y
+escritorio)}\label{rf-01-acceso-multiplataforma-muxf3vil-y-escritorio}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-01
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Acceso multiplataforma (móvil y escritorio)
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe ser accesible desde smartphones (Android/iOS) y desde
+computadoras de escritorio mediante navegador web, manteniendo la misma funcionalidad esencial en ambos entornos.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-01 --- Entrevista, bloque D3 (Amagua y Dr. Antonio).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El usuario puede iniciar sesión y acceder a los módulos principales
+(historiales, citas, facturación) desde un dispositivo Android, un dispositivo iOS y
+un navegador de escritorio, sin pérdida de funcionalidad.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-20 (Login / Selección de rol)
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-02 --- Centralización de información
+clínica}\label{rf-02-centralizaciuxf3n-de-informaciuxf3n-cluxednica}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-02
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Centralización de información clínica
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe centralizar los historiales de todos los pacientes
+(nombre, edad, raza, peso, diagnósticos, tratamientos) en una única base de datos consultable
+desde cualquier módulo autorizado.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-02 --- Entrevistas A1/A2 (Amagua; Dr. Antonio).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Toda consulta nueva queda asociada al paciente correspondiente y es
+recuperable desde cualquier punto de acceso autorizado, sin duplicar
+registros del mismo paciente.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-04
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-03 --- Búsqueda de pacientes por nombre del animal y
+del
+dueño}\label{rf-03-buxfasqueda-de-pacientes-por-nombre-del-animal-y-del-dueuxf1o}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-03
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Búsqueda de pacientes por nombre del animal y del dueño
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe permitir la búsqueda de pacientes por el nombre del
+animal y por el nombre del propietario, resolviendo el problema de
+organización identificado por el personal administrativo.
+\end{minipage} \\
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Fuente}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RC-03 --- Entrevista A2, Amagua ("no está bien organizado el tema de
+buscar por nombre y dueño").
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El sistema retorna resultados coincidentes a partir de 2 caracteres
+ingresados, tanto por nombre del animal como por nombre del dueño
+(tiempo de respuesta cuantificado en RNF-01).
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-02
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-04 --- Registro detallado del historial
+clínico}\label{rf-04-registro-detallado-del-historial-cluxednico}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-04
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Registro detallado del historial clínico
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe registrar en cada consulta: nombre, edad, raza, peso,
+motivo de consulta, diagnóstico, tratamiento, dosis, frecuencia de
+administración y fecha.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-04 --- Entrevistas A1 (Amagua) y A2 (Dr. Antonio).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El formulario de registro de consulta no permite guardar si falta alguno
+de los campos obligatorios (motivo, diagnóstico, tratamiento, dosis,
+frecuencia, fecha).
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-02, RF-23
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-05 --- Alertas automáticas de vencimiento de
+inventario}\label{rf-05-alertas-automuxe1ticas-de-vencimiento-de-inventario}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-05
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Alertas automáticas de vencimiento de inventario
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe registrar la fecha de vencimiento de cada producto y
+generar alertas automáticas conforme se aproxime dicha fecha.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-05 --- Entrevista A4, Dr. Antonio ("siempre se caducan por falta de
+precaución") y Amagua ("manualmente revisando uno a uno").
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Las alertas se generan en los umbrales y latencia definidos en RNF-03
+(30, 15 y 7 días antes del vencimiento).
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-06
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-06 --- Gestión de stock con alertas de
+faltantes}\label{rf-06-gestiuxf3n-de-stock-con-alertas-de-faltantes}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-06
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Gestión de stock con alertas de faltantes
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe registrar las cantidades en stock de cada insumo y
+generar una alerta cuando el nivel disponible caiga por debajo de un
+umbral mínimo configurable por producto.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-06 --- Entrevista A4 (ambas entrevistas).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El sistema permite configurar un umbral mínimo por insumo y genera una
+notificación visible al Bodeguero/Administrativo en cuanto el stock
+cruza dicho umbral.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-05
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-07 --- Registro del proceso de
+cobro}\label{rf-07-registro-del-proceso-de-cobro}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-07
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Registro del proceso de cobro
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe permitir registrar el cobro de cada consulta, incluyendo
+los servicios prestados, los productos utilizados y el monto total
+cobrado.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-07 --- Entrevista A3, Dr. Antonio y Amagua ("la parte más demorada").
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Estabilidad}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El sistema permite seleccionar servicios y productos asociados a la
+consulta y calcula automáticamente el monto total a cobrar, generando un
+comprobante asociado.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-08
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-08 --- Módulo de facturación ágil (máximo 3
+pasos)}\label{rf-08-muxf3dulo-de-facturaciuxf3n-uxe1gil-muxe1ximo-3-pasos}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-08
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Módulo de facturación ágil (máximo 3 pasos)
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El proceso de registro de una factura no debe requerir más de tres pasos
+desde el inicio hasta la emisión del comprobante, eliminando las demoras
+identificadas en el sistema actual.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-08 --- Entrevista A3, Amagua ("es la parte más demorada").
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El flujo de cobro se completa en un máximo de 3 pantallas/pasos
+(selección de servicios y productos, cálculo del total, emisión del
+comprobante); el tiempo total queda cuantificado en RNF-02.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-07
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-09 --- Registro de comunicaciones
+post-consulta}\label{rf-09-registro-de-comunicaciones-post-consulta}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-09
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Registro de comunicaciones post-consulta
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe registrar las comunicaciones realizadas con los dueños
+de las mascotas (llamada, WhatsApp, mensaje), indicando fecha y un
+resumen del contenido.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-09 --- Entrevista A6 (ambas entrevistas).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Cada comunicación registrada queda asociada al paciente correspondiente,
+con tipo, fecha y resumen visibles en su ficha.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-02
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-10 --- Envío de resultados de exámenes por
+WhatsApp}\label{rf-10-envuxedo-de-resultados-de-exuxe1menes-por-whatsapp}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-10
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Envío de resultados de exámenes por WhatsApp
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe permitir adjuntar y enviar resultados de exámenes
+directamente por WhatsApp desde la plataforma.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-10 --- Entrevista A6, Amagua ("los resultados de exámenes se lo
+enviamos directamente por WhatsApp").
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El sistema permite adjuntar un archivo de resultado y enviarlo por
+WhatsApp desde la ficha del paciente, dejando registro del envío en el
+historial de comunicaciones (RF-09).
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-09
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-11 --- Registro de citas y seguimiento de
+inasistencias}\label{rf-11-registro-de-citas-y-seguimiento-de-inasistencias}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-11
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Registro de citas y seguimiento de inasistencias
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe registrar las citas programadas, así como las
+asistencias e inasistencias, permitiendo conocer la evolución del
+paciente aun cuando no regrese a control.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-11 --- Entrevista A5, Amagua ("no sabemos qué pasó con el paciente").
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Estabilidad}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Cada cita programada queda registrada con su estado (asistió/no asistió)
+y es consultable desde el historial de citas del paciente.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-12
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-12 --- Recordatorios automáticos de
+citas}\label{rf-12-recordatorios-automuxe1ticos-de-citas}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-12
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Recordatorios automáticos de citas
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe enviar recordatorios automáticos (WhatsApp o SMS) al
+dueño de la mascota con 24 horas de antelación a una cita programada.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-12 --- Entrevista A5 (Amagua) y A6 (Dr. Antonio).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El recordatorio se envía automáticamente 24 horas antes de la cita, sin
+intervención manual del personal de la clínica.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-11
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{Área 2: Seguimiento Clínico y
+Nutricional}\label{uxe1rea-2-seguimiento-cluxednico-y-nutricional}
+
+\begin{quote}
+\textbf{RF-13 --- Seguimiento cronológico de peso y condición corporal}
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-13
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Seguimiento cronológico de peso y condición corporal
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe registrar de forma cronológica el peso, la edad y los
+parámetros de condición corporal del animal en cada visita, permitiendo
+visualizar su tendencia.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-13 --- Entrevista B1, Dr. Antonio ("en base a la edad va a agarrar el
+peso") y Amagua.
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Cada nueva visita registrada se incorpora al historial de seguimiento
+del paciente y se refleja en un gráfico de tendencia de peso, en orden
+cronológico.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-04
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-14 --- Recomendaciones nutricionales
+personalizadas}\label{rf-14-recomendaciones-nutricionales-personalizadas}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-14
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Recomendaciones nutricionales personalizadas
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe generar recomendaciones de alimentación a partir de la
+raza, edad, peso y condición de salud del animal, como apoyo al juicio
+del veterinario.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-14 --- Entrevista B2, Dr. Antonio ("inculcarle al dueño del perro la
+alimentación nutritiva adecuada") y Amagua.
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+La recomendación nutricional se actualiza automáticamente al registrarse
+un nuevo dato de peso o condición corporal (RF-13) y queda visible en la
+ficha del paciente.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-13
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-15 --- Recordatorios de seguimiento de indicaciones
+médicas}\label{rf-15-recordatorios-de-seguimiento-de-indicaciones-muxe9dicas}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2458}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5047}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2328}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.7374} + 2\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+RF-15
+\end{minipage}} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Recordatorios de seguimiento de indicaciones médicas
+\end{minipage} & \\
+\textbf{Descripción} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.7374} + 2\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe permitir programar recordatorios para verificar el
+cumplimiento de indicaciones médicas (medicación, dieta, reposo) en fechas establecidas
+por el veterinario.
+\end{minipage}} \\
+\textbf{Fuente} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.7374} + 2\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+RC-15 --- Entrevista B3, Amagua ("esperamos que lleguen; si no, no
+podemos saber").
+\end{minipage}} \\
+\textbf{Prioridad} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.7374} + 2\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage}} \\
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Estabilidad}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El veterinario puede programar un recordatorio con fecha y descripción;
+el sistema lo notifica al personal correspondiente en la fecha
+establecida.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-04
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-16 --- Exportación de reportes de salud del paciente en
+PDF}\label{rf-16-exportaciuxf3n-de-reportes-de-salud-del-paciente-en-pdf}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-16
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Exportación de reportes de salud del paciente en PDF
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe generar y exportar reportes del historial clínico del
+paciente en formato PDF, para facilitar su referencia a clínicas con
+mayor equipamiento.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-16 --- Entrevista B4, Dr. Antonio ("se le indica que hay que hacer
+pruebas de sangre o llevar a una clínica con todos los equipos").
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El sistema genera un archivo PDF con el historial clínico completo del
+paciente seleccionado, descargable en menos de 5 segundos.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-04
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsubsection{Área 3: Módulo de Inteligencia
+Artificial}\label{uxe1rea-3-muxf3dulo-de-inteligencia-artificial}
+
+\subparagraph{RF-17 --- Sugerencias diagnósticas asistidas por IA (con
+validación
+obligatoria)}\label{rf-17-sugerencias-diagnuxf3sticas-asistidas-por-ia-con-validaciuxf3n-obligatoria}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-17
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Sugerencias diagnósticas asistidas por IA (con validación obligatoria)
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe analizar los datos clínicos ingresados por el
+veterinario y sugerir posibles diagnósticos diferenciales, sin que ninguna sugerencia pueda
+aplicarse sin revisión y aprobación explícita del veterinario.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-17 --- Entrevista C2/C4, Amagua ("si tengo que dar un visto bueno
+antes, sí") y Dr. Antonio (confianza moderada).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Ninguna sugerencia generada por el módulo de IA se incorpora al
+historial clínico sin una acción explícita de aprobación por parte del
+veterinario.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-04, RF-18, RF-19
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-18 --- Respaldo bibliográfico de las sugerencias de
+IA}\label{rf-18-respaldo-bibliogruxe1fico-de-las-sugerencias-de-ia}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-18
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Respaldo bibliográfico de las sugerencias de IA
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+Cada sugerencia generada por el módulo de IA debe indicar su fuente
+bibliográfica científica, para que el veterinario pueda evaluarla antes
+de aceptarla.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-18 --- Bloque C5, ambas entrevistas (primera opción seleccionada en
+ambos casos).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Cada sugerencia diagnóstica desplegada en el panel de IA incluye al
+menos una referencia bibliográfica científica visible para el
+veterinario.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-17
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-19 --- Revisión y corrección de sugerencias de IA por
+el
+veterinario}\label{rf-19-revisiuxf3n-y-correcciuxf3n-de-sugerencias-de-ia-por-el-veterinario}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-19
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Revisión y corrección de sugerencias de IA por el veterinario
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe permitir al veterinario ver, modificar o rechazar
+cualquier sugerencia del módulo de IA antes de que sea registrada en el
+historial del paciente.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-19 --- Bloque C5, Amagua (segunda opción) y Dr. Antonio.
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Estabilidad}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Volátil
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El veterinario dispone de las opciones "aceptar", "modificar" y
+"rechazar" sobre cada sugerencia individual antes de su incorporación al
+historial.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-17
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsubsection{Área 4: Usabilidad, Acceso y Calidad del
+Sistema}\label{uxe1rea-4-usabilidad-acceso-y-calidad-del-sistema}
+
+\subparagraph{RF-20 --- Interfaz sencilla sin capacitación
+prolongada}\label{rf-20-interfaz-sencilla-sin-capacitaciuxf3n-prolongada}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-20
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Interfaz sencilla sin capacitación prolongada
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe poder ser utilizado por un veterinario con experiencia
+digital básica, sin necesidad de un proceso de formación mayor a 2
+horas.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-20 --- Entrevista D2, Dr. Antonio ("que sea fácil de usar") y Amagua
+("facilidad de utilizarla").
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Un usuario con experiencia digital básica completa el registro de una
+consulta sin asistencia adicional, tras una inducción no mayor a 2
+horas.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+---
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-21 --- Operación local con sincronización
+posterior}\label{rf-21-operaciuxf3n-local-con-sincronizaciuxf3n-posterior}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-21
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Operación local con sincronización posterior
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe permitir el registro y la consulta de historiales
+clínicos de manera local cuando no haya conexión a internet, sincronizando automáticamente
+los cambios al restablecerse la conexión.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-21 --- Entrevista D4, Dr. Antonio (nivel 2-3/5 de cortes) y Amagua
+(cortes poco frecuentes).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El registro y la consulta de historiales clínicos permanecen disponibles
+sin conexión; la sincronización con el servidor se completa según lo definido en
+RNF-04 al restablecerse la conectividad.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-02, RF-04
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-22 --- Perfiles de usuario diferenciados con control de
+acceso}\label{rf-22-perfiles-de-usuario-diferenciados-con-control-de-acceso}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-22
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Perfiles de usuario diferenciados con control de acceso
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe gestionar al menos dos tipos de perfil de usuario,
+médico veterinario y personal administrativo, con accesos y permisos
+diferenciados por rol (RBAC).
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-23 --- Secciones C/D de ambas entrevistas; requisito identificado por
+el equipo.
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El sistema restringe el acceso a cada módulo según el rol asignado al
+usuario autenticado, conforme a lo cuantificado en RNF-05.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-01
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-23 --- Trazabilidad de cambios en historiales
+clínicos}\label{rf-23-trazabilidad-de-cambios-en-historiales-cluxednicos}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-23
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Trazabilidad de cambios en historiales clínicos
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe registrar automáticamente quién realizó cada
+modificación sobre un historial clínico, junto con la fecha y una
+descripción del cambio.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RC-24 --- Derivado de RC-04 y RC-17, buenas prácticas de IA clínica.
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Should have
+\end{minipage} \\
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Estabilidad}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Toda modificación a un historial clínico genera un registro de auditoría
+(usuario, fecha, descripción) que no puede editarse ni eliminarse
+retroactivamente, conforme a RNF-06.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-04
+\end{minipage} \\
+\end{longtable}
+}
+
+\subsubsection{Área 5: Cumplimiento Legal y
+Privacidad}\label{uxe1rea-5-cumplimiento-legal-y-privacidad}
+
+\subparagraph{RF-24 --- Gestión de consentimiento
+informado}\label{rf-24-gestion-de-consentimiento-informado}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-24
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Gestión de consentimiento informado
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe capturar, registrar con fecha y hora, y permitir la
+revocación del consentimiento del propietario para el tratamiento de sus
+datos personales y los del paciente, conforme al Art. 7 y Art. 8 de la
+LOPDP.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RL-01 --- Criterio C4, Requisitos Legales (LOPDP Art. 7, 8).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+El 100\% de los registros de propietarios nuevos queda asociado a un
+consentimiento firmado o registrado digitalmente antes de habilitarse
+cualquier otro módulo.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-02
+\end{minipage} \\
+\end{longtable}
+}
+
+\subparagraph{RF-26 --- Portal de ejercicio de derechos (acceso,
+rectificación,
+eliminación)}\label{rf-26-portal-de-ejercicio-de-derechos}
+
+\begin{quote}
+\textbf{Nota de control de cambios:} este requisito se numeró
+originalmente como RF-25. Se reasignó a \textbf{RF-26} porque el
+identificador RF-25 ya fue aprobado por el CCB en la Práctica
+Experimental N.º 4 (PE4\_U4) para el requisito \emph{"Confirmación de
+asistencia a citas"}, de contenido distinto. El identificador RF-25
+queda reservado para ese requisito ya baselineado y no se reutiliza en
+este documento.
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2455}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7368}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RF-26
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Nombre} & \begin{minipage}[t]{\linewidth}\raggedright
+Portal de ejercicio de derechos (acceso, rectificación, eliminación)
+\end{minipage} \\
+\textbf{Descripción} & \begin{minipage}[t]{\linewidth}\raggedright
+El sistema debe ofrecer un mecanismo mediante el cual el propietario
+pueda solicitar acceso, rectificación o eliminación de sus datos
+personales, conforme a los Art. 13, 14 y 15 de la LOPDP.
+\end{minipage} \\
+\textbf{Fuente} & \begin{minipage}[t]{\linewidth}\raggedright
+RL-04, RL-05, RL-06, RL-07 --- Criterio C4, Requisitos Legales (LOPDP
+Art. 12, 13, 14, 15).
+\end{minipage} \\
+\textbf{Prioridad} & \begin{minipage}[t]{\linewidth}\raggedright
+Must have
+\end{minipage} \\
+\textbf{Estabilidad} & \begin{minipage}[t]{\linewidth}\raggedright
+Estable
+\end{minipage} \\
+\textbf{Criterio de aceptación} &
+\begin{minipage}[t]{\linewidth}\raggedright
+Toda solicitud registrada por el titular recibe respuesta del
+responsable del tratamiento dentro de un plazo máximo de 15 días.
+\end{minipage} \\
+\textbf{Dependencias} & \begin{minipage}[t]{\linewidth}\raggedright
+RF-02, RF-24
+\end{minipage} \\
+\end{longtable}
+}
+
+\begin{quote}
+Resumen: se formalizaron 25 requisitos funcionales (RF-01 a RF-24 y
+RF-26), a partir de 24 requisitos crudos elicitados (RC-01 a RC-24) más
+dos requisitos legales derivados de la LOPDP (RL-01 y
+RL-04/05/06/07, Criterio C4), de los cuales RC-22 se reclasificó como
+restricción de diseño (Sección 3.4) por tratarse de un criterio de
+negocio y no de una
+función observable del sistema.
+\end{quote}
+
+\subsubsection{Requisitos No Funcionales (ISO/IEC
+25010)}\label{requisitos-no-funcionales-isoiec-25010}
+
+\begin{quote}
+A continuación, se formalizan los requisitos no funcionales (RNF) de
+SGCV-IA, clasificados conforme al modelo de calidad ISO/IEC 25010:2023 y
+vinculados a los requisitos crudos (RC) que les dieron origen. Se
+formalizaron 16 RNF (RNF-01 a RNF-16), superando el mínimo de 15
+exigido por la rúbrica; RNF-16 incorpora el requisito de explicabilidad
+de las sugerencias del módulo de Inteligencia Artificial.
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.09}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.20}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.32}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.29}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.10}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Característica ISO/IEC 25010}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Requisito No Funcional}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Métrica / Criterio de aceptación}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{RC relacionado}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{RNF-01} & Eficiencia de desempeño (Tiempo de respuesta) & El
+sistema debe responder con rapidez a las búsquedas de pacientes por
+nombre del animal o del dueño. & Tiempo de respuesta $\leq$ 2 segundos en
+el 95\% de las búsquedas, sobre una base de hasta 500 pacientes activos.
+& RC-03 \\
+\textbf{RNF-02} & Eficiencia de desempeño (Comportamiento temporal) & El
+registro de una factura debe completarse de forma ágil, sin pasos
+innecesarios. & El proceso de facturación no debe exceder 3 pasos ni 90
+segundos desde el inicio hasta la emisión. & RC-08 \\
+\textbf{RNF-03} & Fiabilidad (Madurez) & El sistema debe generar alertas
+de vencimiento de productos de forma automática y oportuna. & Cobertura
+del 100\% de los productos registrados; alertas emitidas en los umbrales
+de 30, 15 y 7 días antes del vencimiento, con una latencia máxima de 24
+horas. & RC-05 \\
+\textbf{RNF-04} & Fiabilidad (Disponibilidad) & El sistema debe permitir
+el registro y consulta de historiales clínicos de forma local ante
+cortes de conectividad, sincronizando al restablecerse la conexión. &
+Disponibilidad de funciones críticas $\geq$ 99\% del tiempo operativo;
+sincronización completa en $\leq$ 30 segundos tras reconectar. & RC-21
+\\
+\textbf{RNF-05} & Seguridad (Control de acceso / Confidencialidad) & El
+sistema debe restringir el acceso a la información según el perfil del
+usuario. & 100\% de las operaciones sensibles requieren autenticación; al
+menos 2 perfiles diferenciados; bloqueo de cuenta tras 5 intentos
+fallidos. & RC-23 \\
+\textbf{RNF-06} & Seguridad (Trazabilidad / No repudio) & El sistema
+debe registrar todos los cambios realizados sobre los historiales
+clínicos. & 100\% de las modificaciones quedan registradas (usuario,
+fecha y descripción), sin posibilidad de edición o eliminación
+retroactiva del registro de auditoría. & RC-24 \\
+\textbf{RNF-07} & Usabilidad (Capacidad de aprendizaje) & El sistema
+debe poder ser utilizado por personal con experiencia digital básica sin
+un proceso de formación prolongado. & Un usuario ejecuta las tareas
+principales tras una capacitación $\leq$ 2 horas, con una tasa de error
+$\leq$ 5\% en sus primeras 10 ejecuciones. & RC-20 \\
+\textbf{RNF-08} & Compatibilidad (Coexistencia operativa /
+Portabilidad) & El sistema debe ser accesible y funcional desde
+múltiples dispositivos y plataformas. & Disponibilidad funcional
+completa en navegadores web actualizados y en Android 10+ / iOS 14+, con
+paridad de funciones $\geq$ 95\% entre plataformas. & RC-01 \\
+\textbf{RNF-09} & Fiabilidad / Adecuación funcional (Exactitud de la
+IA) & Las sugerencias del módulo de IA deben estar respaldadas
+científicamente y ser revisables antes de su aplicación. & 100\% de las
+sugerencias diagnósticas incluyen referencia bibliográfica y requieren
+aprobación explícita del veterinario; tiempo de generación $\leq$ 5
+segundos. & RC-17, RC-18, RC-19 \\
+\textbf{RNF-10} & Mantenibilidad (Modularidad) & Una falla del proveedor
+externo de IA (LLM) no debe afectar la disponibilidad de los módulos
+restantes del sistema. & Disponibilidad de los módulos no dependientes
+de IA $\geq$ 99\% incluso ante una caída total del servicio de IA
+externo. & Sección 2.5 (Dependencias) \\
+\textbf{RNF-11} & Eficiencia de desempeño (Utilización de recursos) & El
+sistema debe operar dentro de límites razonables de consumo de recursos
+del servidor, incluso bajo carga concurrente del personal de la clínica.
+& Uso de CPU $\leq$ 70\% y de memoria $\leq$ 75\% del backend con hasta
+20 usuarios concurrentes activos. & Elabora\-ción propia \\
+\textbf{RNF-12} & Seguridad (Confidencialidad / Cifrado de datos) & La
+información sensible del sistema (historiales clínicos, datos de
+facturación, credenciales) debe protegerse frente a accesos no
+autorizados durante su transmisión y almacenamiento. & 100\% de los
+datos sensibles cifrados en tránsito (TLS 1.2 o superior) y en reposo
+(AES-256); contraseñas almacenadas únicamente mediante hash con salt. &
+Elabora\-ción propia \\
+\textbf{RNF-13} & Fiabilidad (Recuperabilidad) & El sistema debe
+permitir recuperar la información ante fallos de hardware, corrupción de
+datos o eliminaciones accidentales. & Copias de seguridad automáticas
+diarias con retención mínima de 30 días; tiempo objetivo de recuperación
+(RTO) $\leq$ 4 horas y punto objetivo de recuperación (RPO) $\leq$ 24
+horas. & Elabora\-ción propia \\
+\textbf{RNF-14} & Mantenibilidad (Capacidad de prueba) & El sistema debe
+facilitar la verificación de su correcto funcionamiento ante cambios o
+nuevas versiones. & Cobertura de pruebas automatizadas $\geq$ 70\% en los
+módulos críticos (historial clínico, facturación, IA); despliegue de una
+nueva versión en $\leq$ 30 minutos sin interrupción del servicio. &
+Elabora\-ción propia \\
+\textbf{RNF-15} & Usabilidad (Satisfacción del usuario) & El sistema
+debe generar una experiencia de uso satisfactoria para el personal
+veterinario y administrativo. & Nivel de satisfacción $\geq$ 80\% medido
+mediante encuesta System Usability Scale (SUS) aplicada tras el primer
+mes de uso, sobre una muestra de al menos 5 usuarios activos. &
+Elabora\-ción propia \\
+\textbf{RNF-16} & Adecuación funcional (Explicabilidad de la IA) & Toda
+sugerencia generada por el módulo de IA debe presentar al veterinario,
+junto con el resultado, los factores clínicos de entrada que la
+originaron y el nivel de confianza asociado, de forma comprensible sin
+conocimientos técnicos de IA. & 100\% de las sugerencias diagnósticas se
+acompañan de al menos los tres factores de mayor peso considerados y un
+indicador de confianza (alto/medio/bajo), visibles antes de que el
+veterinario decida aceptar, modificar o rechazar. & RC-17, RC-18, RC-19
+\\
+\end{longtable}
+}
+
+\begin{quote}
+\protect\phantomsection\label{_bookmark41b}{}Tabla 10-bis. Requisitos No
+Funcionales del SGCV-IA (ISO/IEC 25010)
+
+Se formalizaron 16 requisitos no funcionales, cubriendo ocho
+características del modelo ISO/IEC 25010: eficiencia de desempeño,
+fiabilidad, seguridad, usabilidad, compatibilidad, mantenibilidad y
+adecuación funcional. RNF-16 cierra el piso de explicabilidad exigido
+por la rúbrica: toda sugerencia de IA debe exponer al veterinario los
+factores que la originaron y un nivel de confianza, evitando que el
+sistema funcione como una caja negra.
+\end{quote}
+
+\subsubsection{Requisitos Legales
+(LOPDP)}\label{requisitos-legales-lopdp}
+
+\begin{quote}
+El SGCV-IA trata datos personales de los propietarios de las mascotas
+(identificación, contacto, datos de facturación) y datos clínicos
+vinculados a un titular identificable, por lo que su tratamiento queda
+sujeto íntegramente al ámbito de aplicación de la Ley Orgánica de
+Protección de Datos Personales del Ecuador (LOPDP, Registro Oficial
+Suplemento No. 459 del 26 de mayo de 2021). A partir de los artículos
+aplicables de la LOPDP se derivan catorce requisitos legales explícitos
+(RL-01 a RL-14), cada uno vinculado al RF o RNF del sistema que lo
+satisface.
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.10}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.14}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.56}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.20}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{RL}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Artículo LOPDP}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Requisito legal derivado}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{RF/RNF relacionado}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{RL-01} & Art. 7, 8 & El sistema debe capturar consentimiento
+libre, específico, informado e inequívoco antes de tratar datos
+personales del propietario. & RF-24 \\
+\textbf{RL-02} & Art. 10 lit. e) & El sistema debe limitar la
+recolección de datos a los estrictamente necesarios para la finalidad
+clínica y administrativa declarada. & RF-04, RF-07 \\
+\textbf{RL-03} & Art. 10 lit. i) & El sistema debe conservar los datos
+personales solo durante el plazo necesario y eliminarlos o anonimizarlos
+al vencer dicho plazo. & RNF-13 \\
+\textbf{RL-04} & Art. 12 & El sistema debe informar al titular sobre las
+finalidades del tratamiento de sus datos. & RF-26 \\
+\textbf{RL-05} & Art. 13 & El sistema debe permitir al titular solicitar
+acceso a sus datos personales, atendible en 15 días. & RF-26 \\
+\textbf{RL-06} & Art. 14 & El sistema debe permitir al titular solicitar
+la rectificación de sus datos personales, atendible en 15 días. & RF-02,
+RF-26 \\
+\textbf{RL-07} & Art. 15 & El sistema debe permitir al titular solicitar
+la eliminación de sus datos personales, atendible en 15 días. & RF-26 \\
+\textbf{RL-08} & Art. 17 & El sistema debe permitir la exportación de
+los datos personales del titular en un formato portable. & RF-16 \\
+\textbf{RL-09} & Art. 20 & Ninguna sugerencia del módulo de IA puede
+aplicarse sin revisión y aprobación explícita del veterinario. & RF-17,
+RF-18, RF-19 \\
+\textbf{RL-10} & Art. 25, 26, 30, 31 & Los datos de salud (categoría
+especial) deben protegerse bajo un deber reforzado de confidencialidad y
+secreto profesional. & RF-17, RNF-09, RNF-12 \\
+\textbf{RL-11} & Art. 33, 34, 35 & Toda transferencia de datos a
+terceros (proveedor de mensajería, motor de IA) debe contar con base de
+licitud y garantías contractuales. & RF-10, RNF-10 \\
+\textbf{RL-12} & Art. 37, 39 & El sistema debe implementar medidas de
+seguridad desde el diseño y por defecto. & RNF-05, RNF-12 \\
+\textbf{RL-13} & Art. 43, 46 & El equipo responsable debe contar con un
+procedimiento documentado para notificar vulneraciones de seguridad a la
+Autoridad ($\leq$ 5 días) y al titular ($\leq$ 3 días). & RNF-13 \\
+\textbf{RL-14} & Art. 47, 48 & Debe designarse un responsable del
+tratamiento y, de corresponder, un Delegado de Protección de Datos. &
+Restricción de diseño (RST) \\
+\end{longtable}
+}
+
+\begin{quote}
+\protect\phantomsection\label{_bookmark41c}{}Tabla 10-ter. Catálogo de
+Requisitos Legales (RL) del SGCV-IA derivados de la LOPDP y su
+trazabilidad hacia RF/RNF. Fuente: elaboración propia (Criterio C4).
+\end{quote}
+
+\subsubsection{Restricciones de
+Diseño}\label{restricciones-de-diseuxf1o}
+
+\begin{quote}
+A continuación, se documentan las restricciones de diseño de SGCV-IA:
+limitaciones impuestas por el entorno, el presupuesto, la arquitectura y
+consideraciones regulatorias/éticas, derivadas del alcance definido en
+la Sección 1.2 y de los requisitos funcionales y no funcionales
+formalizados en las Secciones 3.2 y 3.3. Se incluye RC-22 ("Bajo costo
+de implementación y operación"), reclasificado en esta sección por
+tratarse de un criterio de negocio y no de una función observable del
+sistema.
+\end{quote}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1267}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.5591}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1627}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1358}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Restricción}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Tipo / Origen}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Relacionado}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{RST-01} & El sistema debe contemplar un modelo de costos
+accesible para clínicas de 1 a 3 veterinarios; se priorizará el uso de
+frameworks, bibliotecas y servicios de bajo costo o de código abierto. & Presupuestaria & RC-22 \\
+\textbf{RST-02} & El sistema debe diseñarse con una arquitectura que
+permita su consumo equivalente desde aplicaciones móviles (Android/iOS)
+y desde navegador de escritorio, sin requerir un rediseño del backend para cada plataforma. & Tecnológica & RF-01 \\
+\textbf{RST-03} & El módulo de sincronización offline debe implementarse
+mediante una cola local de operaciones pendientes, evitando una réplica
+completa de la base de datos en el dispositivo cliente. & Técnica / Hardware & RF-21 \\
+\textbf{RST-04} & El módulo de Inteligencia Artificial debe
+implementarse como un componente desacoplado del backend transaccional principal, de forma que su indisponibilidad o reentrenamiento no afecte
+la disponibilidad del resto del sistema. & Arquitectónica & RF-17,
+RF-18, RF-19 \\
+\textbf{RST-05} & Toda sugerencia generada por el módulo de IA debe
+quedar sujeta a revisión y aprobación explícita del veterinario; el
+sistema no debe permitir que una sugerencia se incorpore automáticamente al historial clínico sin dicha validación. & Ética /
+
+Regulatoria & RF-17 \\
+\textbf{RST-06} & El sistema debe implementar control de acceso basado
+en roles (RBAC), restringiendo cada módulo según el perfil del usuario autenticado (médico veterinario o personal administrativo). & Seguridad
+& RF-22 \\
+\textbf{RST-07} & El registro de auditoría de los historiales clínicos
+(usuario, fecha, descripción del cambio) no debe permitir edición ni eliminación retroactiva. & Seguridad & RF-23 \\
+\textbf{RST-08} & El sistema no debe emitir diagnósticos definitivos ni
+prescripciones automatizadas de medicamentos; toda salida del módulo de
+IA tiene carácter de sugerencia sujeta a decisión del veterinario. & Regulatoria / Alcance & RF-17, RF-19 \\
+\textbf{RST-09} & El sistema no debe integrarse con sistemas
+gubernamentales de salud animal ni emitir facturación electrónica
+certificada ante el SRI en la versión 1.0. & Regulatoria / Alcance &
+Sec. 1.2 \\
+\end{longtable}
+}
+
+\begin{quote}
+\protect\phantomsection\label{table10}{}Tabla 10. Restricciones de
+diseño del SGCV-IA
+
+Se identificaron 9 restricciones de diseño (RST-01 a RST-09), agrupadas
+en cinco tipos: presupuestaria, tecnológica, técnica/hardware,
+arquitectónica, ética/regulatoria y de seguridad. Estas restricciones
+condicionan las decisiones de diseño detallado que se tomarán en fases
+posteriores del proyecto y deberán verificarse contra los RF y RNF
+correspondientes durante el modelado UML (Sección 4).
+\end{quote}
