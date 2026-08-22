@@ -1,1 +1,158 @@
+% =====================================================================
+\section{Especificación de requisitos final}
+\label{sec:ers}
 
+\subsection{Catálogo final de requisitos}
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Composición del catálogo de requisitos del ERS de SGCV-IA (v3.0)}
+\label{tab:catalogo}
+\begin{tabular}{|L{5.6cm}|C{2.0cm}|C{2.4cm}|L{4.4cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{Tipo} & \textbf{Cantidad} & \textbf{Rango} & \textbf{Observación}\\ \hline
+Requisitos funcionales & 25 & \id{RF-01}--\id{RF-24}, \id{RF-26} & 19 \emph{Must}, 6 \emph{Should}; \id{RF-25} reservado y reasignado por el CCB\\ \hline
+Requisitos no funcionales & 18 & \id{RNF-01}--\id{RNF-18} & Mapeados a características de ISO/IEC 25010; supera el mínimo de 15 exigido por la rúbrica\\ \hline
+Requisitos legales & 14 & \id{RL-01}--\id{RL-14} & Derivados de la LOPDP, trazados hacia RF/RNF\\ \hline
+Restricciones de diseño & 9 & \id{RST-01}--\id{RST-09} & Presupuestaria, tecnológica, técnica/hardware, arquitectónica, ética/regulatoria y de seguridad\\ \hline
+\textbf{Total formalizado} & \textbf{66} & --- & A partir de 24 requisitos crudos (\id{RC-01}--\id{RC-24}) elicitados en la Unidad II\\ \hline
+\end{tabular}
+\end{table}
+
+\noindent
+El catálogo de 25 RF se formalizó a partir de veinticuatro requisitos crudos elicitados
+(\id{RC-01} a \id{RC-24}), más dos requisitos legales derivados directamente de la LOPDP
+(\id{RL-01} y el bloque \id{RL-04}/\id{RL-05}/\id{RL-06}/\id{RL-07}, Criterio C4). Uno de los
+crudos, \id{RC-22} (``Bajo costo de implementación y operación''), se reclasificó como
+restricción de diseño (\id{RST-01}) por tratarse de un criterio de negocio y no de una función
+observable del sistema, lo que explica por qué el rango funcional salta de \id{RF-24} a
+\id{RF-26}: \id{RF-25} fue aprobado por el Change Control Board en una práctica anterior para un
+requisito de contenido distinto (asistencia a citas) y el identificador original quedó reservado
+para evitar colisión.
+
+\subsection{Requisitos clave y por qué lo son}
+
+De los veinticinco requisitos funcionales, cinco concentran la propuesta de valor del sistema y
+son los que conviene poder defender uno por uno.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Requisitos clave de SGCV-IA y su justificación en la evidencia}
+\label{tab:req-clave}
+\begin{tabular}{|C{1.4cm}|L{4.2cm}|L{4.4cm}|L{4.4cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{ID} & \textbf{Requisito} & \textbf{Evidencia que lo sustenta} & \textbf{Por qué es clave}\\ \hline
+\id{RF-04} & Registro detallado del historial clínico & \id{EV-01}, \id{EV-02}: entrevistas al Dr. Antonio y a Amagua & Es la base de la que dependen el diagnóstico asistido, el seguimiento nutricional y la trazabilidad de auditoría\\ \hline
+\id{RF-17} & Sugerencias diagnósticas asistidas por IA & \id{EV-01}, \id{EV-02} & Es la funcionalidad distintiva del sistema frente a un gestor clínico convencional, y la que activa la mayor parte del marco normativo (\id{RL-09}, \id{RL-10}, \id{RST-05}, \id{RST-08})\\ \hline
+\id{RF-21} & Operación con baja dependencia de conectividad permanente & \id{EV-01} & Sin sincronización diferida, el sistema queda inoperable en las condiciones reales de conectividad de la clínica\\ \hline
+\id{RF-24} & Gestión de consentimiento informado (LOPDP) & \id{EV-04}: consentimiento informado firmado & Es la puerta de entrada legal para tratar cualquier dato del propietario o de la mascota; sin él, ningún otro RF es lícito\\ \hline
+\id{RF-26} & Portal de ejercicio de derechos (acceso, rectificación, eliminación) & \id{EV-04} & Concentra la implementación de cuatro requisitos legales (\id{RL-04} a \id{RL-07}) en un único punto de contacto para el titular\\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Priorización MoSCoW del catálogo}
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Priorización de requisitos mediante MoSCoW}
+\label{tab:moscow}
+\begin{tabular}{|L{2.0cm}|L{6.0cm}|L{4.2cm}|L{2.2cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{Prioridad} & \textbf{RF} & \textbf{RNF} & \textbf{\%}\\ \hline
+Must have & \id{RF-01} a \id{RF-17}, \id{RF-24}, \id{RF-26} (19 RF) & \id{RNF-01}, \id{RNF-02}, \id{RNF-04}, \id{RNF-05}, \id{RNF-09}, \id{RNF-16} (6 RNF) & 71\,\%\\ \hline
+Should have & \id{RF-18} a \id{RF-23} (6 RF) & \id{RNF-03}, \id{RNF-06}, \id{RNF-07} (3 RNF) & 25\,\%\\ \hline
+Could have & Ninguno & \id{RNF-08}, \id{RNF-10} (2 RNF) & 4\,\%\\ \hline
+Won't have & --- & --- & 0\,\%\\ \hline
+\end{tabular}
+\end{table}
+
+\noindent
+Los diecinueve \emph{Must} son las funciones sin las cuales el sistema no reemplaza el proceso
+manual actual de la clínica: registro de pacientes, historial clínico, atención médica con
+diagnóstico asistido por IA, control de inventario, gestión de empleados, facturación y
+comunicación. Los seis \emph{Should} aportan valor significativo ---reportes comparativos,
+seguimiento nutricional detallado, recordatorios automáticos, trazabilidad de auditoría--- pero el
+sistema es funcional sin ellos en una primera versión. Ningún RF quedó en \emph{Could have}; a
+nivel de RNF, la portabilidad extendida a más plataformas móviles (\id{RNF-08}) y la resiliencia
+total ante una caída prolongada del proveedor externo de IA (\id{RNF-10}) son mejoras deseables que
+no bloquean la operación básica y se abordan en una segunda iteración. No se identificaron
+requisitos a excluir explícitamente del alcance funcional ya definido, porque las exclusiones de
+alcance ---diagnósticos definitivos sin validación humana, prescripción automatizada, integración
+con sistemas gubernamentales de salud animal, facturación electrónica certificada ante el SRI,
+\emph{e-commerce}--- ya se filtraron en la fase de planificación (Entrega 1A) y nunca entraron como
+candidatos a RC o RF.
+
+\subsection{Requisitos no funcionales por característica de calidad}
+
+Los dieciocho requisitos no funcionales se organizan según las características de calidad de
+producto de ISO/IEC 25010 \cite{iso25010}. Cubren desempeño (tiempo de respuesta,
+comportamiento temporal, utilización de recursos), fiabilidad (madurez, disponibilidad,
+recuperabilidad), seguridad (control de acceso, trazabilidad y no repudio, cifrado de datos),
+usabilidad (capacidad de aprendizaje, satisfacción del usuario), compatibilidad, mantenibilidad
+(modularidad, capacidad de prueba) y dos características añadidas por el propio dominio del
+proyecto: explicabilidad de la IA (\id{RNF-16}) y privacidad, esta última desdoblada en
+conservación de datos (\id{RNF-17}) y respuesta a incidentes (\id{RNF-18}), ambas trazadas
+directamente a artículos de la LOPDP. \id{RNF-16} es el requisito que cierra el piso de
+explicabilidad exigido por el componente de IA: ninguna sugerencia diagnóstica puede presentarse
+sin su referencia bibliográfica y su nivel de confianza asociado.
+
+\subsection{Requisitos legales y su trazabilidad hacia RF/RNF}
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Selección de requisitos legales derivados de la LOPDP y su implementación}
+\label{tab:rl}
+\begin{tabular}{|C{1.4cm}|C{1.6cm}|L{5.6cm}|L{4.2cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{ID} & \textbf{Artículo} & \textbf{Obligación} & \textbf{Requisito que la implementa}\\ \hline
+\id{RL-01} & Art. 7, 8 & Captura de consentimiento informado del propietario & \id{RF-24}\\ \hline
+\id{RL-04} & Art. 12 & Informar al titular sobre las finalidades del tratamiento & \id{RF-26}\\ \hline
+\id{RL-05} & Art. 13 & Derecho de acceso, atendible en 15 días & \id{RF-26}\\ \hline
+\id{RL-06} & Art. 14 & Derecho de rectificación & \id{RF-26}\\ \hline
+\id{RL-07} & Art. 15 & Derecho de eliminación, atendible en 15 días & \id{RF-26}\\ \hline
+\id{RL-09} & Art. 20 & Ninguna sugerencia de IA se aplica sin revisión del veterinario & \id{RF-17}, \id{RF-18}, \id{RF-19}\\ \hline
+\id{RL-10} & Art. 25, 26, 30, 31 & Datos de salud como categoría especial bajo secreto profesional & \id{RF-17}, \id{RNF-09}, \id{RNF-12}\\ \hline
+\id{RL-13} & Art. 43, 46 & Notificación de incidentes a la Autoridad ($\leq$5 días) y al titular ($\leq$3 días) & \id{RNF-18}, \id{RF-23}\\ \hline
+\end{tabular}
+\end{table}
+
+\noindent
+Se listan ocho de los catorce requisitos legales, los que condicionan directamente un requisito
+funcional o no funcional concreto; el catálogo completo (\id{RL-01} a \id{RL-14}) reside en la
+Sección 3.4 del ERS. Los cuatro derechos del titular ---acceso, rectificación, eliminación y
+portabilidad--- se concentran en un único requisito funcional (\id{RF-26}, portal de ejercicio de
+derechos) en lugar de dispersarse en pantallas independientes, decisión que simplifica tanto la
+implementación como la auditoría de cumplimiento.
+
+\subsection{Restricciones de diseño}
+
+Se identificaron nueve restricciones de diseño (\id{RST-01} a \id{RST-09}), agrupadas en cinco
+tipos: presupuestaria, tecnológica, técnica/hardware, arquitectónica y ética/regulatoria-seguridad.
+Ninguna proviene de una preferencia técnica del equipo: todas se derivan del alcance definido en la
+Entrega 1A o de un requisito funcional o no funcional ya formalizado.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Restricciones de diseño de SGCV-IA (selección)}
+\label{tab:rst}
+\begin{tabular}{|C{1.4cm}|L{6.8cm}|L{2.4cm}|L{2.4cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{ID} & \textbf{Restricción} & \textbf{Tipo / Origen} & \textbf{Relacionado}\\ \hline
+\id{RST-01} & Modelo de costos accesible para clínicas de 1 a 3 veterinarios; se prioriza software de bajo costo o código abierto & Presupuestaria & \id{RC-22}\\ \hline
+\id{RST-03} & Sincronización offline mediante cola local de operaciones pendientes, sin réplica completa de la base de datos en el cliente & Técnica / Hardware & \id{RF-21}\\ \hline
+\id{RST-04} & El módulo de IA se implementa desacoplado del backend transaccional, de modo que su indisponibilidad no afecte al resto del sistema & Arquitectónica & \id{RF-17}, \id{RF-18}, \id{RF-19}\\ \hline
+\id{RST-05} & Toda sugerencia de IA queda sujeta a revisión y aprobación explícita del veterinario antes de incorporarse al historial & Ética / Regulatoria & \id{RF-17}\\ \hline
+\id{RST-08} & El sistema no emite diagnósticos definitivos ni prescripciones automatizadas; toda salida de IA es sugerencia & Regulatoria / Alcance & \id{RF-17}, \id{RF-19}\\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Matriz de trazabilidad}
+
+La matriz de trazabilidad de la \S\ref{sec:gestion} conecta evidencia de campo, requisito y caso de
+uso. Las evidencias \id{EV-01} a \id{EV-04} corresponden al registro del Apéndice B: \id{EV-01} es
+la entrevista al Dr. Antonio (24/05/2026); \id{EV-02}, la entrevista a Amagua (25/05/2026);
+\id{EV-03}, el acta de reunión firmada; \id{EV-04}, el consentimiento informado firmado. Cuando un
+requisito no corresponde a uno de los diez casos de uso detallados, se referencia el caso de uso
+equivalente del diagrama general. La numeración de esta cadena de trazabilidad se mantiene
+coherente con la reclasificación de \id{RC-22} señalada en la \S\ref{sec:ers}: al no ocupar fila de
+RF, la tabla no presenta un salto sin explicación entre \id{RF-24} y \id{RF-26}.
