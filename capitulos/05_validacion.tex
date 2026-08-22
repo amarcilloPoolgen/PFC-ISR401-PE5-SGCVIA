@@ -1,1 +1,111 @@
-
+% =====================================================================
+\section{Validación de requisitos}
+\label{sec:validacion}
+ 
+\subsection{Walkthrough estructurado en lugar de inspección formal}
+ 
+\begin{table}[H]
+\centering\footnotesize
+\caption{Parámetros de la validación aplicada al ERS de SGCV-IA}
+\label{tab:validacion}
+\begin{tabular}{|L{6.4cm}|L{8.6cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{Parámetro} & \textbf{Valor}\\ \hline
+Documento validado & ERS/SRS de SGCV-IA, versiones 2.0 y 3.0 (Entrega 2A)\\ \hline
+Técnica & \emph{Walkthrough} estructurado, integrado al cierre de cada iteración de Scrum\\ \hline
+Alcance & Documento completo, sin exclusión declarada de apéndices\\ \hline
+Registro de hallazgos & No se llevó un registro formal de defectos con severidad y tipo; las correcciones se aplicaron directamente sobre las fuentes en cada iteración\\ \hline
+Evidencia & Carpeta \texttt{02\_Evidencias/Validacion\_Walkthrough/} del repositorio\\ \hline
+\end{tabular}
+\end{table}
+ 
+\noindent
+SGCV-IA no aplicó el método de Fagan con roles diferenciados, preparación individual obligatoria y
+prohibición de discutir soluciones en sesión \cite{fagan1976}. La decisión y su justificación se
+desarrollan en la \S\ref{sec:metodologia}: un ciclo de inspección formal completo exige una cadencia
+de reunión y una preparación previa incompatibles con \emph{sprints} cortos y un equipo reducido. La
+consecuencia directa de esa decisión es metodológica y conviene declararla sin rodeos: al no existir
+una lista de verificación de inspección ni una consolidación de defectos por severidad y tipo, este
+documento no puede presentar las métricas de densidad de defectos, distribución por tipo o esfuerzo
+en horas-persona que sí serían exigibles tras una inspección formal tipo Fagan. Lo que sí puede
+documentarse, con evidencia trazable al historial de versiones del ERS, son las correcciones
+concretas que el \emph{walkthrough} produjo entre la versión 2.0 y la versión 3.0 del documento.
+ 
+\subsection{Correcciones producidas por el walkthrough}
+ 
+\begin{table}[H]
+\centering\footnotesize
+\caption{Correcciones aplicadas al ERS entre las versiones 2.0 y 3.0}
+\label{tab:correcciones}
+\begin{tabular}{|C{2.2cm}|L{6.0cm}|L{6.4cm}|}
+\hline
+\rowcolor{grisclaro}\textbf{Elemento} & \textbf{Estado antes de la corrección} & \textbf{Corrección aplicada}\\ \hline
+Numeración de RF & \id{RC-22} (``Bajo costo de implementación y operación'') ocupaba una fila de requisito funcional & Reclasificado como restricción de diseño (\id{RST-01}); dejó de ocupar fila de RF\\ \hline
+Identificador \id{RF-25} & Aprobado previamente por el CCB en una práctica anterior para un requisito de contenido distinto (asistencia a citas) & Reservado y no reutilizado; el requisito de portal de derechos se formalizó como \id{RF-26} para evitar colisión de identificadores\\ \hline
+Requisitos no funcionales & Ausentes de la Entrega 2A inicial & Incorporados en la v3.0: 18 RNF (\id{RNF-01} a \id{RNF-18}), superando el mínimo de 15 exigido por la rúbrica\\ \hline
+Consistencia y formato & Referencias internas y consistencia de formato pendientes de revisión final & Corregidas y declaradas explícitamente en el historial de cambios de la v3.0\\ \hline
+\end{tabular}
+\end{table}
+ 
+\noindent
+El patrón de estas correcciones es distinto del que produce una inspección formal por severidad y
+tipo, pero es igualmente informativo: las dos primeras filas son de consistencia de identificadores
+---un requisito ocupando la categoría equivocada, un identificador reutilizado antes de tiempo--- y
+no de contenido faltante; la tercera es de completitud del catálogo, no de un elemento individual mal
+especificado. Es el mismo tipo de defecto que la \S\ref{sec:metodologia} anticipa como punto débil de
+una lista de verificación centrada en revisar elementos uno por uno: nada obliga al revisor a
+preguntarse si el conjunto está completo o si la numeración es internamente coherente, y ambos
+problemas aparecieron aquí.
+ 
+\subsection{Por qué ocurrieron: análisis de causa}
+ 
+Las cuatro correcciones de la tabla anterior no son independientes entre sí; comparten dos causas.
+ 
+\textbf{Las dos primeras son de gobierno de identificadores entre entregas.} \id{RC-22} ocupó una
+fila de requisito funcional porque en el momento de elicitarlo no existía todavía la categoría de
+restricción de diseño en el catálogo; la reclasificación llegó cuando esa categoría se formalizó, no
+antes. El caso de \id{RF-25}/\id{RF-26} tiene una causa distinta y más estructural: el proyecto
+reutiliza un espacio de identificadores entre prácticas experimentales distintas del mismo curso
+(PE4\_U4 y esta entrega), y ese espacio no está centralizado en un único documento de control. El
+identificador RF-25 ya estaba baselineado por el Change Control Board para un requisito de contenido
+distinto (``Confirmación de asistencia a citas'') antes de que este ERS llegara a numerar el portal
+de derechos; el conflicto se detectó porque el equipo revisó el histórico antes de baselinear, no
+porque un procedimiento lo hubiera bloqueado automáticamente.
+ 
+\textbf{Las dos últimas son de completitud del catálogo, no de corrección de un elemento.} La
+incorporación tardía de los 18 RNF y las correcciones de consistencia declaradas en la v3.0 responden
+a la misma limitación que la \S\ref{sec:validacion} ya señaló para el \emph{walkthrough}: revisar si
+cada elemento presente está bien escrito no obliga a preguntarse si faltan elementos completos por
+declarar. El catálogo de RNF no estaba mal especificado en la Entrega 2A inicial; sencillamente no
+estaba.
+ 
+\subsection{El precedente del Change Control Board}
+ 
+SGCV-IA sí cuenta con un precedente real de gobierno formal de cambios: el caso \id{RF-25}/\id{RF-26}
+muestra que existe un Change Control Board que baselinea identificadores entre prácticas del curso, y
+que ese baseline se respeta incluso cuando resulta incómodo ---obligó a renumerar un requisito ya
+redactado en este ERS en lugar de reabrir el identificador ya aprobado. Lo que no existe para esta
+entrega es un CCB actuando \emph{sobre} este ERS a partir de hallazgos de una inspección formal: las
+tres correcciones restantes de la tabla anterior se resolvieron por consenso del equipo durante el
+\emph{walkthrough}, sin tramitarse como solicitud de cambio formal, precisamente porque no derivaban
+de una inspección que las hubiera registrado como defectos con ID propio.
+ 
+\subsection{Limitación declarada}
+ 
+Conviene ser explícito sobre lo que este documento no puede afirmar. Sin un registro de defectos
+consolidado por severidad, tipo y esfuerzo, no es posible calcular una densidad de defectos por
+página ni una tasa de detección por rol, y este ERS no las reporta ni las estima. Afirmar cifras de
+ese tipo sin la inspección que las produce sería presentar como medición lo que sería una suposición.
+ 
+\subsection{Acción correctiva de proceso}
+ 
+La conclusión operativa no es que el \emph{walkthrough} haya sido insuficiente, sino que puede
+complementarse sin adoptar el costo completo de una inspección formal. Para la siguiente entrega se
+recomiendan dos ajustes concretos: mantener una lista de verificación mínima que registre cada
+corrección aplicada durante el \emph{walkthrough} ---qué cambió, en qué sección, por qué--- en lugar
+de aplicar la corrección directamente sin dejar rastro; e incluir explícitamente en cada revisión los
+apéndices y los conteos globales del documento cuando este haya sufrido cambios aprobados, que es
+precisamente donde se originaron los dos primeros hallazgos de la tabla anterior. Ese registro
+mínimo no exige los roles ni la cadencia de Fagan, pero sí permitiría, en una futura entrega, calcular
+métricas de proceso que hoy este documento no tiene base para reportar.
+ 
