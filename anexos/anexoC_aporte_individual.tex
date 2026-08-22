@@ -1,1 +1,119 @@
+\subsubsection{Anexo C --- Declaración individual de aporte (Jeanpool
+Marcillo --- Criterio C2, Trazabilidad y Gestión)}\label{anexo-c-marcillo}
 
+\textbf{Resumen del aporte.} Además de los artefactos formales del
+criterio C2 (matriz de trazabilidad, gestión de cambios), realicé una
+auditoría completa de consistencia interna sobre \texttt{main.tex}
+que abarcó 4 rondas de revisión: modelo de dominio, catálogo de
+requisitos legales, referencias cruzadas del documento, y
+sincronización del backlog. El detalle verificable está en la
+siguiente tabla.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.40}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.36}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.24}}@{}}
+\toprule\noalign{}
+\textbf{Aporte concreto (artefacto / sección)} &
+\textbf{Descripción} &
+\textbf{Evidencia en Git} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+
+\multicolumn{3}{@{}l}{\textbf{Ronda 1 --- Modelo de dominio}} \\
+
+\texttt{03\_Modelado/Diagramas\_UML/DIAGRAMA DE CLASES REFINADOS v3.1.pdf} &
+Diagrama de clases ampliado: incorpora Cita, Factura, SugerenciaIA,
+Consentimiento y SolicitudARCO; cierra 12 RF sin clase de dominio
+asociada. RF-16 resuelto reutilizando \texttt{HistorialClinico.ex\-por\-tar\-PDF()}
+en vez de crear una clase Reporte innecesaria. &
+\texttt{2537a4b} --- 20-ago-2026 \\
+
+\multicolumn{3}{@{}l}{\textbf{Ronda 2 --- Catálogo de requisitos legales (LOPDP)}} \\
+
+Auditoría de citas normativas en \texttt{main.tex} &
+Corrección de 7 citas ``LOPDP Art. 4'' genéricas sin respaldo verificable
+en la tabla RL-01 a RL-14 (RF-04, RF-07, RF-09, RF-10, RF-22, RNF-05,
+RNF-06, RST-02, RST-03), reemplazadas por el artículo real o eliminadas
+cuando no había respaldo. &
+\texttt{9230279} --- 20-ago-2026 \\
+
+RNF-17 y RNF-18 (Requisitos No Funcionales nuevos) &
+Detección de que RL-03 (conservación/eliminación de datos) y RL-13
+(notificación de vulneraciones) apuntaban ambas al mismo RNF-13, cuyo
+contenido real (backup/recuperación) no correspondía a ninguna de las
+dos obligaciones. Formalicé RNF-17 y RNF-18 para cerrar ambas brechas
+legales de forma independiente. &
+\texttt{9230279} --- 20-ago-2026 \\
+
+RL-02, RL-06, RL-13 (correcciones de cita) &
+RL-02: reemplacé RF-04/RF-07 (sin relación real) por RF-01. RL-06:
+quité RF-02 (sin relación). RL-13: agregué RF-23 (auditoría) como
+respaldo adicional junto a RNF-18. &
+\texttt{9230279} --- 20-ago-2026 \\
+
+\multicolumn{3}{@{}l}{\textbf{Ronda 3 --- Consistencia interna del documento}} \\
+
+Corrección de Tabla 26 (Restricciones) &
+Detecté dos catálogos de RST-01 a RST-06 contradictorios dentro del
+mismo \texttt{main.tex} (Tabla 1 vs. Tabla 26, con contenido distinto
+para los mismos identificadores). Verifiqué cuál era la fuente
+autoritativa cruzando referencias internas (EV-01, resúmenes) y
+reemplacé la Tabla 26 errónea por el catálogo real de RST-01 a RST-09. &
+\texttt{9230279} --- 20-ago-2026 \\
+
+Corrección de referencias rotas &
+Eliminé un \texttt{label} huérfano duplicado (\texttt{\_bookmark35}) que
+rompía el hipervínculo de la Ilustración 12; fusioné dos secciones
+duplicadas (``Registro de commits'', ``Clasificación MoSCoW''); corregí
+2 enlaces rotos del índice (Restricciones Clasificadas, Índice de
+multimedia) causados por un error de codificación de tildes. &
+\texttt{9230279} --- 20-ago-2026 \\
+
+Corrección de CU en RF-07/RF-08 &
+Detecté, cruzando el backlog real de Trello, que RF-07 y RF-08 estaban
+asignados a CU-02 en la matriz cuando el documento ya definía
+formalmente un CU-07 (Facturación y Cobro) para ese propósito. Corregí
+en la matriz extendida y en la tabla de evidencias EV-02. &
+\texttt{9230279} --- 20-ago-2026 \\
+
+\multicolumn{3}{@{}l}{\textbf{Ronda 4 --- Trazabilidad final y backlog}} \\
+
+\texttt{capitulos/06\_gestion\_trazabilidad.tex} &
+Sección de Gestión y Trazabilidad: verificación de correcciones
+previas (colisión RF-25, contenido de otro dominio), incorporación
+del diagrama v3.1, cierre del hallazgo de clases sin modelar. &
+\texttt{2bf12cc} --- 21-ago-2026 \\
+
+\texttt{matriz/matriz\_trazabilidad\_final.xlsx} &
+Matriz de Trazabilidad Final de las 25 filas RF activas (cadena
+Fuente $\rightarrow$ CU $\rightarrow$ Clase UML $\rightarrow$
+Historia), con las 12 filas antes pendientes actualizadas a Estado
+Completa. &
+\texttt{fbf36cd} --- 21-ago-2026 \\
+
+Cálculo de sincronización backlog $\leftrightarrow$ ERS &
+Verificación de las 25 historias de usuario del tablero (Trello,
+\texttt{Trello\_Import\_SGCV\_IA.csv}) contra los 25 RF activos del
+ERS: 100\% de sincronización, sin historias huérfanas. Métrica que
+llevaba toda la iteración anterior bloqueada por falta de export del
+tablero. &
+\texttt{2bf12cc} --- 21-ago-2026 \\
+
+Tabla de huérfanos y cadenas rotas &
+Verificación de los 2 hallazgos críticos de la auditoría anterior
+(colisión de ID, contenido ajeno al dominio) y cierre formal del
+hallazgo de clases sin modelar, con referencia cruzada al diagrama v3.1. &
+\texttt{2bf12cc} --- 21-ago-2026 \\
+
+\end{longtable}
+
+\textbf{Declaro que los aportes descritos en esta tabla corresponden
+a trabajo propio, verificable en el historial de commits del
+repositorio del equipo.}
+
+\bigskip
+
+Firma: \underline{\hspace{5cm}} \hfill Jeanpool Marcillo
