@@ -1,1 +1,345 @@
+% =====================================================================
+% capitulos/07_requisitos_ia.tex
+% Criterio C3 - Requisitos de IA (Rubrica PE5) - Aporte: Vera
+% Requiere en el preambulo del documento principal:
+%   \usepackage[utf8]{inputenc}
+%   \usepackage[T1]{fontenc}
+%   \usepackage[spanish]{babel}
+%   \usepackage{longtable}
+%   \usepackage{array}
+%   \usepackage{booktabs}
+% =====================================================================
 
+\chapter{Requisitos de Componentes de IA}
+\label{cap:requisitos_ia}
+
+\noindent\textbf{UTEQ --- Ingeniería de Requerimientos (ISR-401)}\\
+PE5 --- Unidad V: Integración, Métricas y Defensa del PFC\\
+Proyecto: SGCV-IA (Sistema de Gestión para Clínica Veterinaria con IA)\\
+\textbf{Aporte individual}
+
+% ---------------------------------------------------------------------
+\section{Componentes de IA identificados y justificación (Paso 3.a)}
+\label{sec:ia-justificacion}
+
+El ERS actual (v3.0, sección ``Módulo de Inteligencia Artificial'') ya define un componente de IA, el asistente de sugerencias diagnósticas (RF-17/18/19). La guía exige al menos dos componentes, así que a continuación se consolida ese componente (IA-01) y se propone un segundo componente (IA-02) que ya tiene fundamento en requisitos existentes del sistema (RF-13/RF-14, ``Seguimiento Nutricional''), evitando así un componente sin relación con el dominio real.
+
+\subsection*{IA-01: Asistente de sugerencias diagnósticas (ya existente en el ERS)}
+
+\textbf{Justificación:} Nace de evidencia primaria propia del equipo (entrevistas a Amagua y al Dr. Antonio, bloques C2/C4/C5), responde a un problema real (apoyo a la decisión clínica, sin embargo, no reemplazo del veterinario) y ya cuenta con restricciones éticas explícitas (RST-04, RST-05, RST-08 -- arquitectura desacoplada, validación humana obligatoria, prohibición de diagnóstico definitivo automatizado).
+
+\subsection*{IA-02: Recomendador nutricional personalizado (propuesto, extiende RF-13/RF-14)}
+
+\textbf{Justificación:} El ERS ya reconoce ``Seguimiento Nutricional'' como funcionalidad de valor medio-alto (RF-13 Must, RF-14 Should). Hoy ese seguimiento es manual, ya que el valor real de incorporar IA es calcular automáticamente el requerimiento calórico y el tipo de dieta a partir de especie, raza, peso e historial clínico (ej. pacientes diabéticos o con insuficiencia renal), reduciendo el error de cálculo manual y alertando desviaciones de peso relevantes. Mantiene el mismo patrón ético que IA-01: sugerencia sujeta a aprobación del veterinario, nunca prescripción automática.
+
+% ---------------------------------------------------------------------
+\section{Ficha de componente de IA-01: Asistente de sugerencias diagnósticas}
+\label{sec:ficha-ia01}
+
+\begin{longtable}{@{}>{\bfseries\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.68\linewidth}@{}}
+\toprule
+\textbf{Identificador y nombre} & \textbf{IA-01: Asistente de sugerencias diagnósticas asistido por IA} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Identificador y nombre} & \textbf{IA-01: Asistente de sugerencias diagnósticas asistido por IA} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+
+Tarea y tipo & \textbf{Clasificación / recomendación:} a partir de síntomas y motivo de consulta, sugiere diagnósticos diferenciales ordenados, con respaldo bibliográfico. \\[4pt]
+
+Entradas y salidas & \textbf{Entrada:} datos clínicos de la consulta (síntomas, motivo, antecedentes del paciente) capturados en el módulo de Historiales Clínicos.
+
+\textbf{Salida:} lista de diagnósticos diferenciales sugeridos, cada uno con al menos una referencia bibliográfica científica. \\[4pt]
+
+Datos de entrenamiento & \textbf{Origen:} casos clínicos reales de la Clínica Veterinaria (con consentimiento informado, ver \texttt{08\_Etica/Encuesta\_Consentimiento.pdf} y \texttt{Solicitud\_Aprobacion\_Etica}) y literatura veterinaria de respaldo.
+
+\textbf{Variables:} especie, raza, edad, peso, síntomas, diagnóstico confirmado por el veterinario. \textbf{Etiquetado:} diagnóstico final validado por el profesional (no la sugerencia de IA). \textbf{Calidad mínima:} casos con síntomas y diagnóstico confirmado completos.
+
+\textbf{Sesgos conocidos:} sobre-representación de caninos y felinos frente a otras especies atendidas ocasionalmente (aves, exóticos).
+
+\textbf{Base legal:} datos del dueño protegidos por LOPDP Art.\ 4 (ya etiquetado así en RF-04); datos clínicos del paciente animal tratados con el mismo nivel de confidencialidad por política interna del equipo. \\[4pt]
+
+Métricas de éxito & \textbf{Métrica principal:} exactitud top-3 (el diagnóstico confirmado por el veterinario está entre las 3 sugerencias) $\geq$ 80\,\% sobre un conjunto de validación de $\geq$ 200 casos (RNF-11). \textbf{Métricas secundarias:} latencia $\leq$ 3\,s en percentil 95 (RNF-12).
+
+\textbf{Conjunto de evaluación:} casos históricos reservados, no usados en entrenamiento. \\[4pt]
+
+Equidad & \textbf{Métrica:} diferencia de exactitud top-3 entre especies con mayor volumen (caninos/felinos) $\leq$ 10 puntos porcentuales (RNF-13), diferencia de exactitud entre pacientes con historial extenso y pacientes nuevos ($<$\,2 consultas previas) $\leq$ 15 puntos porcentuales (RNF-14).
+
+\textbf{Grupos comparados:} especie y antigüedad del historial.
+
+\textbf{Brecha máxima tolerada:} la indicada en cada RNF. \\[4pt]
+
+Explicabilidad & \textbf{Qué se explica:} el factor clínico de entrada que motivó la sugerencia y su respaldo bibliográfico (RF-18, RNF-15).
+
+\textbf{A quién:} al veterinario que revisa la consulta (no al dueño de la mascota).
+
+\textbf{En qué formato:} texto en lenguaje clínico, sin jerga de aprendizaje automático.
+
+\textbf{En qué momento:} antes de habilitar la opción ``Aceptar'' (RF-19). \\[4pt]
+
+Riesgos y fallback & \textbf{Riesgo:} sugerencia incorrecta o sesgada podría inducir un diagnóstico erróneo si se acepta sin criterio.
+
+\textbf{Fallback:} si el módulo de IA no está disponible (RST-04, arquitectura desacoplada), el veterinario continúa el registro del historial de forma manual, sin bloqueo del resto del sistema (RF-04). \\[4pt]
+
+Clasificación de riesgo & Riesgo limitado, no de alto riesgo bajo el Reglamento (UE) 2024/1689 (ver Sección~\ref{sec:clasificacion-riesgo}).
+
+\textbf{Obligaciones:} transparencia hacia el veterinario (ya cubierta por RST-05/RST-08/RNF-15) y trazabilidad de versiones del modelo. \\[4pt]
+
+Plan de monitoreo & \textbf{Indicadores:} exactitud top-3 y brechas de equidad por especie, recalculados trimestralmente sobre los casos acumulados en producción (mismo ciclo que la re-inspección de la PE5).
+
+\textbf{Frecuencia:} trimestral o ante cambio relevante en el mix de especies atendidas.
+
+\textbf{Umbral de alerta por deriva:} caída $>$ 10 puntos porcentuales en exactitud top-3 respecto a la última medición.
+
+\textbf{Criterio de reentrenamiento:} dos mediciones trimestrales consecutivas por debajo del umbral, o cambio documentado en el protocolo clínico de referencia. \\[4pt]
+
+Trazas & RF-04, RF-17, RF-18, RF-19, RNF-09, RNF-11, RNF-12, RNF-13, RNF-14, RNF-15, RST-04, RST-05, RST-08. \\
+
+\end{longtable}
+
+\subsection{Requisitos funcionales y no funcionales de IA-01}
+\label{sec:rfrnf-ia01}
+
+\textbf{RF (ya existentes en el ERS, se referencian y se completa su verificabilidad):}
+
+\begin{longtable}{@{}>{\bfseries}p{0.09\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.58\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Umbral / criterio verificable} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RF-17 & Sugerencias diagnósticas asistidas por IA & Ninguna sugerencia se incorpora al historial sin aprobación explícita del veterinario (checkbox/acción registrada con usuario y fecha). \\
+RF-18 & Respaldo bibliográfico de las sugerencias & 100\,\% de las sugerencias desplegadas incluyen $\geq$ 1 referencia bibliográfica científica visible. \\
+RF-19 & Revisión y corrección de sugerencias por el veterinario & El veterinario dispone de ``Aceptar'', ``Modificar'' y ``Rechazar'' sobre cada sugerencia antes de su registro. \\
+\end{longtable}
+
+\textbf{RNF de rendimiento:}
+
+\begin{longtable}{@{}>{\bfseries}p{0.13\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Umbral, unidad y método de comprobación} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RNF-09 (existente) & Rendimiento del panel de diagnóstico IA & Se complementa con RNF-11/12 para dejarlo comprobable. \\
+RNF-11 (nuevo) & Exactitud mínima del modelo diagnóstico & Exactitud top-3 $\geq$ 80\,\% sobre conjunto de validación de $\geq$ 200 casos anotados por un veterinario; se mide con script de evaluación offline antes de cada despliegue. \\
+RNF-12 (nuevo) & Latencia de respuesta de la API de IA & $\leq$ 3\,s en el percentil 95 con hasta 20 consultas concurrentes; se mide con prueba de carga (ej. k6) sobre el endpoint \texttt{/api/diagnostico}. \\
+\end{longtable}
+
+\textbf{RNF de equidad:}
+
+\begin{longtable}{@{}>{\bfseries}p{0.13\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Umbral, unidad y método de comprobación} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RNF-13 (nuevo) & Equidad entre especies & Diferencia de exactitud top-3 entre caninos y felinos $\leq$ 10 puntos porcentuales, cálculo segmentado por especie, revisión trimestral. \\
+RNF-14 (nuevo) & Equidad entre historiales nuevos y extensos & Diferencia de exactitud top-3 entre pacientes con $<$ 2 consultas previas y pacientes con historial extenso $\leq$ 15 puntos porcentuales; mismo ciclo de revisión que RNF-13. \\
+\end{longtable}
+
+\textbf{RNF de explicabilidad:}
+
+\begin{longtable}{@{}>{\bfseries}p{0.13\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Umbral, unidad y método de comprobación} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RNF-15 (nuevo) & Explicabilidad de la sugerencia diagnóstica & 100\,\% de las sugerencias muestran, antes de habilitar ``Aceptar'', el factor clínico de entrada que la motivó y su referencia bibliográfica (RF-18); se verifica por muestreo de interfaz en cada versión liberada. \\
+\end{longtable}
+
+% ---------------------------------------------------------------------
+\section{Ficha de componente de IA-02: Recomendador nutricional personalizado}
+\label{sec:ficha-ia02}
+
+\begin{longtable}{@{}>{\bfseries\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.68\linewidth}@{}}
+\toprule
+\textbf{Identificador y nombre} & \textbf{IA-02: Recomendador nutricional personalizado} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Identificador y nombre} & \textbf{IA-02: Recomendador nutricional personalizado} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+
+Tarea y tipo & \textbf{Recomendación:} genera un plan nutricional (tipo de dieta, calorías/día, frecuencia de porciones) a partir de especie, raza, edad, peso e historial clínico del paciente. \\[4pt]
+
+Entradas y salidas & \textbf{Entrada:} especie, raza, edad, peso de los últimos 90 días y condiciones clínicas activas (ej. diabetes, insuficiencia renal) del módulo de Historiales Clínicos y Seguimiento Nutricional.
+
+\textbf{Salida:} plan de dieta con calorías/día, tipo de alimento sugerido y justificación de los factores usados. \\[4pt]
+
+Datos de entrenamiento & \textbf{Origen:} historial de peso y dieta de pacientes de la clínica (con consentimiento informado ya recabado, \texttt{08\_Etica}) y fórmulas veterinarias de referencia (energía en reposo/mantenimiento).
+
+\textbf{Variables:} especie, raza, peso, edad, condición clínica.
+
+\textbf{Etiquetado:} no aplica un ``ground truth'' único; se valida contra la fórmula de referencia acordada por el equipo veterinario.
+
+\textbf{Calidad mínima:} peso registrado en los últimos 90 días.
+
+\textbf{Sesgos conocidos:} razas con pocos casos históricos ($<$ 10) tendrán menor precisión.
+
+\textbf{Base legal:} igual que IA-01, datos del dueño bajo LOPDP Art.\ 4. \\[4pt]
+
+Métricas de éxito & \textbf{Métrica principal:} el cálculo calórico coincide con un margen $\leq$ 5\,\% respecto a la fórmula de referencia validada por el equipo, sobre $\geq$ 30 casos de prueba (RNF-16). Latencia $\leq$ 3\,s en percentil 95 (RNF-17). Disponibilidad $\geq$ 99\,\% mensual (RNF-18). \\[4pt]
+
+Equidad & \textbf{Métrica:} diferencia de error absoluto medio (MAE) del cálculo calórico entre las razas con más historial y las razas con menor representación ($<$ 10 casos) $\leq$ 10\,\% del valor calórico estimado (RNF-19). Diferencia en la tasa de recomendaciones corregidas manualmente entre pacientes con y sin condición clínica crónica $\leq$ 15 puntos porcentuales (RNF-20). \\[4pt]
+
+Explicabilidad & \textbf{Qué se explica:} los factores de entrada considerados (peso actual, peso objetivo, condición clínica, raza) y la fórmula usada.
+
+\textbf{A quién:} al veterinario, antes de comunicar el plan al dueño.
+
+\textbf{En qué formato:} desglose textual simple.
+
+\textbf{En qué momento:} antes de la aprobación (RF-27). \\[4pt]
+
+Riesgos y fallback & \textbf{Riesgo:} una recomendación calórica mal calibrada en pacientes con condición crónica podría ser clínicamente relevante si se sigue sin revisión.
+
+\textbf{Fallback:} si el módulo no está disponible, el veterinario calcula manualmente con la fórmula de referencia ya documentada por el equipo; el resto del sistema no se ve afectado (arquitectura desacoplada, igual que RST-04). \\[4pt]
+
+Clasificación de riesgo & Riesgo limitado (ver Sección~\ref{sec:clasificacion-riesgo}). Recomendación no vinculante, siempre sujeta a aprobación humana. \\[4pt]
+
+Plan de monitoreo & \textbf{Indicadores:} MAE del cálculo calórico y brecha de equidad por raza, recalculados trimestralmente.
+
+\textbf{Umbral de alerta:} MAE $>$ 8\,\% respecto al valor de referencia.
+
+\textbf{Criterio de reentrenamiento/ajuste:} dos mediciones trimestrales consecutivas por encima del umbral, o incorporación de una fórmula de referencia actualizada. \\[4pt]
+
+Trazas & RF-09, RF-10, RF-13, RF-14, RF-25, RF-26, RF-27, RNF-16, RNF-17, RNF-18, RNF-19, RNF-20, RNF-21. \\
+
+\end{longtable}
+
+\subsection{Requisitos funcionales y no funcionales de IA-02}
+\label{sec:rfrnf-ia02}
+
+\textbf{RF (nuevos, continúan la numeración del ERS desde RF-24):}
+
+\begin{longtable}{@{}>{\bfseries}p{0.11\linewidth} >{\raggedright\arraybackslash}p{0.22\linewidth} >{\raggedright\arraybackslash}p{0.55\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Criterio de aceptación (BDD resumido)} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RF-25 & Generación de recomendación nutricional personalizada & Dado un paciente con especie/raza y $\geq$ 1 registro de peso, cuando el veterinario solicita la recomendación, entonces el sistema muestra plan de dieta, calorías/día y justificación en $<$ 5\,s. \\
+RF-26 & Alerta de desviación de peso relevante & Dado un nuevo registro de peso, cuando la desviación respecto al peso ideal de la raza supera $\pm$15\,\%, entonces se genera una alerta visible en la misma sesión. \\
+RF-27 & Aprobación y edición de la recomendación nutricional & El veterinario dispone de ``Aceptar'', ``Modificar'' y ``Rechazar'' sobre cada recomendación antes de registrarla o comunicarla al dueño (análogo a RF-19). \\
+\end{longtable}
+
+\textbf{RNF de rendimiento:}
+
+\begin{longtable}{@{}>{\bfseries}p{0.13\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Umbral, unidad y método de comprobación} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RNF-16 & Exactitud del cálculo calórico & Margen $\leq$ 5\,\% respecto a la fórmula de referencia validada por el equipo, sobre $\geq$ 30 casos de prueba, comparación automatizada en cada versión. \\
+RNF-17 & Latencia de la recomendación & $\leq$ 3\,s en percentil 95 con 20 usuarios concurrentes, prueba de carga sobre \texttt{/api/nutricion}. \\
+RNF-18 & Disponibilidad del módulo & $\geq$ 99\,\% mensual, medida por monitoreo del endpoint; su caída no afecta el resto del sistema. \\
+\end{longtable}
+
+\textbf{RNF de equidad:}
+
+\begin{longtable}{@{}>{\bfseries}p{0.13\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Umbral, unidad y método de comprobación} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RNF-19 & Equidad entre razas con distinto volumen de datos & Diferencia de MAE entre razas con más historial y razas con $<$ 10 casos $\leq$ 10\,\% del valor calórico estimado, revisión trimestral. \\
+RNF-20 & Equidad entre pacientes con y sin condición crónica & Diferencia en tasa de corrección manual del veterinario $\leq$ 15 puntos porcentuales entre ambos grupos, mismo ciclo de revisión. \\
+\end{longtable}
+
+\textbf{RNF de explicabilidad:}
+
+\begin{longtable}{@{}>{\bfseries}p{0.13\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.54\linewidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Nombre} & \textbf{Umbral, unidad y método de comprobación} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+RNF-21 & Explicabilidad de la recomendación nutricional & 100\,\% de las recomendaciones muestran el desglose de factores (peso, raza, condición clínica) y la fórmula usada, verificado por muestreo de interfaz antes de cada liberación. \\
+\end{longtable}
+
+% ---------------------------------------------------------------------
+\section{Clasificación de riesgo: Reglamento (UE) 2024/1689}
+\label{sec:clasificacion-riesgo}
+
+\textbf{Razonamiento:} el Reglamento clasifica los sistemas de IA por nivel de riesgo, con las categorías de ``alto riesgo'' del Anexo~III referidas a decisiones que afectan a personas naturales (acceso a servicios esenciales, salud humana, empleo, crédito, actuación policial, migración, identificación biométrica, etc.). IA-01 e IA-02 sugieren decisiones sobre la salud de animales, no de personas naturales, y en ambos casos la decisión final la toma siempre el veterinario (RST-05, RST-08, RF-19/RF-27); el sistema nunca decide ni actúa de forma autónoma.
+
+Por lo tanto, ninguno de los dos componentes encaja en las categorías de alto riesgo del Anexo~III. La clasificación que corresponde es \textbf{riesgo limitado}: no se prohíbe ni se exige evaluación de conformidad de terceros, pero sí aplican buenas prácticas de transparencia (Art.\ 50) hacia el usuario profesional que interactúa con el sistema, y es recomendable adoptar voluntariamente prácticas de gobernanza (Art.\ 95) aunque no sean obligatorias en este nivel.
+
+\textbf{Obligaciones derivadas que el equipo ya cumple o debe documentar:}
+
+\begin{itemize}
+  \item \textbf{Transparencia hacia el veterinario:} toda salida debe identificarse explícitamente como generada por IA y sujeta a revisión (cubierto por RST-05, RST-08, RNF-15, RNF-21).
+  \item \textbf{Prohibición de automatización total:} el sistema no debe emitir diagnósticos ni prescripciones/planes sin aprobación humana (RST-08 ya lo establece para IA-01, se extiende a IA-02 en RF-27).
+  \item \textbf{Trazabilidad de versiones del modelo:} registrar qué versión del modelo generó cada sugerencia, para poder auditar decisiones si se reporta un caso problemático (recomendación de mejora para el plan de monitoreo, Sección~7.3 de la guía).
+  \item \textbf{Documentación técnica interna:} la ficha de componente de IA (Secciones~\ref{sec:ficha-ia01} y \ref{sec:ficha-ia02} de este documento) sirve como evidencia de gobernanza voluntaria.
+\end{itemize}
+
+% ---------------------------------------------------------------------
+\section{Base legal y medidas -- LOPDP Ecuador}
+\label{sec:lopdp}
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.14\linewidth} >{\raggedright\arraybackslash}p{0.25\linewidth} >{\raggedright\arraybackslash}p{0.25\linewidth}@{}}
+\toprule
+\textbf{Dato tratado} & \textbf{¿Es dato personal LOPDP?} & \textbf{Base legal} & \textbf{Medidas} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+
+Identificación y contacto del dueño de la mascota (nombre, teléfono, correo, dirección) &
+Sí, dato personal de una persona natural &
+Ejecución del contrato de prestación del servicio veterinario (Art.\ 4 LOPDP) para la gestión de citas/facturación; consentimiento informado explícito para comunicaciones (WhatsApp/correo), ya contemplado en RF-09/RF-10 &
+RBAC por rol (RST-06), registro de auditoría sin edición retroactiva (RST-07). \textbf{Minimización:} el módulo de IA no requiere el nombre del dueño, solo variables clínicas del paciente \\[6pt]
+
+Historial clínico y variables usadas por IA-01/IA-02 (síntomas, diagnóstico, peso, raza, edad) &
+Dato asociado a un paciente animal, no es dato personal en sentido estricto de LOPDP, pero se vincula a un titular (el dueño), por lo que se trata con el mismo nivel de confidencialidad &
+Ejecución del contrato + interés legítimo del tratamiento veterinario, para uso en entrenamiento/evaluación del modelo; consentimiento informado adicional (ya gestionado por el equipo en \texttt{08\_Etica}: \texttt{Encuesta\_Consentimiento.pdf}, \texttt{Solicitud\_Aprobacion\_Etica\_SGCV-IA.pdf}) &
+Seudonimización de los conjuntos usados para entrenar o evaluar el modelo (retirar nombre/identificación del dueño, conservar solo especie/raza/edad/peso/diagnóstico); conservación limitada al período definido por el equipo, acceso restringido a los roles autorizados \\
+
+\end{longtable}
+
+% ---------------------------------------------------------------------
+\section{Trazabilidad de los requisitos de IA (Paso 3.e)}
+\label{sec:trazabilidad-ia}
+
+Filas para añadir a la Matriz de Trazabilidad Final (plantilla 7.2 de la guía).
+
+\textbf{Fuente:} sección ``Módulo de Inteligencia Artificial'' del ERS (existente) y esta ficha (nuevo); estado de traza: completa, ya que cada RF-IA se enlaza con al menos un RF/RNF preexistente del sistema, según exige la Sección~4.4 de la guía.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.24\linewidth} >{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedright\arraybackslash}p{0.30\linewidth}@{}}
+\toprule
+\textbf{RF/RNF} & \textbf{Fuente} & \textbf{Se traza con} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+
+RF-17, RF-18, RF-19 (IA-01) & RC-17/18/19 -- entrevistas C2/C4/C5 & RF-04 (historiales clínicos), RNF-09 \\[4pt]
+RNF-11, RNF-12, RNF-13, RNF-14, RNF-15 (IA-01, nuevo) & Esta ficha, Paso 3 & RF-17, RF-18, RF-19, RST-04, RST-05, RST-08 \\[4pt]
+RF-25, RF-26, RF-27 (IA-02, nuevo) & Extiende RF-13/RF-14 (Seguimiento Nutricional) & RF-09, RF-10, RF-13, RF-14 \\[4pt]
+RNF-16 a RNF-21 (IA-02, nuevo) & Esta ficha, Paso 3 & RF-25, RF-26, RF-27 \\
+
+\end{longtable}
+
+\textbf{Ningún RF-IA queda huérfano:} todos modifican o extienden el criterio de aceptación de un RF/RNF ya existente, tal como exige la Sección~4.4 de la guía ampliada.
